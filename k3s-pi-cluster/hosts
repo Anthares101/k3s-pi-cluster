@@ -1,0 +1,11 @@
+[workers]
+balthasar.lan
+casper.lan
+
+[masters]
+melchior.lan
+
+[nodes:children]
+workers
+masters
+
