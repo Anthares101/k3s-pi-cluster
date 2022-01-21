@@ -1,0 +1,9 @@
+---
+- name: Shutdown all the clusters nodes
+  hosts: nodes
+  remote_user: pi
+  become: yes
+
+  tasks:
+  - name: Shutdown host
+    community.general.shutdown:

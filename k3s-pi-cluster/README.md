@@ -6,3 +6,9 @@ Raspbian default configuration is nice but not perfect:
 ```
 ansible-playbook raspberrypi-initial-setup.yaml -i hosts -K
 ```
+
+## Shutdown cluster
+
+```
+ansible-playbook shutdown-nodes.yaml -i hosts -K
+```
