@@ -22,6 +22,22 @@
       path: /etc/sudoers.d/010_pi-nopasswd
       state: absent
 
+  - name: Disable SSH root access and password auth
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      line: "{{ item.line }}"
+    loop:
+      - { line: 'PermitRootLogin no' }
+      - { line: 'UsePAM no' }
+      - { line: 'PasswordAuthentication no' }
+    register: ssh_conf
+
+  - name: Reload SSH service if needed
+    ansible.builtin.service:
+      name: sshd
+      state: reloaded
+    when: ssh_conf.changed
+
   - name: Reboot hosts if necessary
     reboot:
       msg: "Reboot initiated by Ansible"
