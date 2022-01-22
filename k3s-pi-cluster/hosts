@@ -2,10 +2,10 @@
 balthasar.lan
 casper.lan
 
-[masters]
+[master]
 melchior.lan
 
 [nodes:children]
 workers
-masters
+master
 

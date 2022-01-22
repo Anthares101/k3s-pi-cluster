@@ -3,6 +3,7 @@
   hosts: nodes
   remote_user: pi
   become: yes
+  gather_facts: false
 
   tasks:
   - name: Shutdown host
