@@ -12,3 +12,11 @@ ansible-playbook raspberrypi-initial-setup.yaml -i hosts -K
 ```
 ansible-playbook shutdown-nodes.yaml -i hosts -K
 ```
+
+## Install K3S
+
+Yeah, this easy:
+
+```
+ansible-playbook install-k3s.yaml -i hosts -K
+```

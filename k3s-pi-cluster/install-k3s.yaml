@@ -1,5 +1,5 @@
 ---
-- name: Set up cluster-wide configuration.
+- name: Set up cluster-wide configuration
   hosts: nodes
   gather_facts: false
   become: true
@@ -53,7 +53,7 @@
   become: true
 
   tasks:
-    - name: Install K3s on nodes (takes a while).
+    - name: Install K3s on nodes (takes a while)
       ansible.builtin.shell: >-
         K3S_URL=https://"{{ groups['master'][0] }}":6443
         K3S_TOKEN="{{ hostvars[groups['master'][0]]['node_token'] }}"
