@@ -4,13 +4,13 @@
 
 Raspbian default configuration is nice but not perfect:
 ```
-ansible-playbook raspberrypi-initial-setup.yaml -i hosts -K
+ansible-playbook raspberrypi-initial-setup.yaml -K
 ```
 
 ## Shutdown cluster
 
 ```
-ansible-playbook shutdown-nodes.yaml -i hosts -K
+ansible-playbook shutdown-nodes.yaml -K
 ```
 
 ## Install K3S
@@ -18,5 +18,5 @@ ansible-playbook shutdown-nodes.yaml -i hosts -K
 Yeah, this easy:
 
 ```
-ansible-playbook install-k3s.yaml -i hosts -K
+ansible-playbook install-k3s.yaml -K
 ```
