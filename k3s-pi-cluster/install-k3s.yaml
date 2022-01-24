@@ -31,7 +31,7 @@
   become: true
 
   tasks:
-    - name: Install K3s control plane
+    - name: Install K3s control plane (takes a while)
       ansible.builtin.shell: >-
         ~/k3s_install.sh >> ~/k3s_install_log.txt
       args:
@@ -53,7 +53,7 @@
   become: true
 
   tasks:
-    - name: Install K3s on nodes (takes a while)
+    - name: Install K3s on nodes
       ansible.builtin.shell: >-
         K3S_URL=https://"{{ groups['master'][0] }}":6443
         K3S_TOKEN="{{ hostvars[groups['master'][0]]['node_token'] }}"
