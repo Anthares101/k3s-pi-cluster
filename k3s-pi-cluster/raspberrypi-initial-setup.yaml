@@ -4,7 +4,10 @@
   remote_user: pi
   become: yes
   gather_facts: no
-  
+
+  vars_files:
+    - vars.yml
+    
   handlers:
     - name: reboot-pi
       reboot:
@@ -29,9 +32,15 @@
       path: /etc/sudoers.d/010_pi-nopasswd
       state: absent
 
-  - name: Set the right timezone (For me at least)
+  - name: Set the right timezone
     community.general.timezone:
-      name: Europe/Madrid
+      name: '{{ timezone }}'
+
+  - name: Secure pi home folder
+    file:
+      path: /home/pi
+      state: directory
+      mode: '0750'
 
   - name: Disable SSH root access and password auth
     lineinfile:
