@@ -29,6 +29,10 @@
       path: /etc/sudoers.d/010_pi-nopasswd
       state: absent
 
+  - name: Set the right timezone (For me at least)
+    community.general.timezone:
+      name: Europe/Madrid
+
   - name: Disable SSH root access and password auth
     lineinfile:
       dest: /etc/ssh/sshd_config
