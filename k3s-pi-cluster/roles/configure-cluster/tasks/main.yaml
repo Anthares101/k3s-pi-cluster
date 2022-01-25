@@ -1,7 +1,7 @@
 - name: Get master taints
   become: true
-  shell: >
-    "kubectl describe node {{ master_node_name }} | grep Taint | awk '{print $2}'"
+  shell: |
+    kubectl describe node '{{ master_node_name }}' | grep Taint | awk '{print $2}'
   args:
     executable: /bin/bash
   register: master_taints
