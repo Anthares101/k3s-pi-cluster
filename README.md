@@ -1,5 +1,7 @@
 # K3S Pi Cluster
 
+The monitoring stack used is the [Carlos Eduardo](https://github.com/carlosedp) version of the [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus) repo and part of the Ansible roles were adapted from [Jeff Geerling](https://github.com/geerlingguy) [turing-pi-cluster](https://github.com/geerlingguy/turing-pi-cluster).
+
 ## What does the playbook do?
 
 This Playbook do a couple of things:
