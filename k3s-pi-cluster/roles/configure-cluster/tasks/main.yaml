@@ -1,6 +1,7 @@
 - name: Get master taints
   become: true
-  command: "kubectl describe node {{ master_node_name }} | grep Taint | awk '{print $2}'"
+  shell: >
+    "kubectl describe node {{ master_node_name }} | grep Taint | awk '{print $2}'"
   register: master_taints
 
 - name: Taint master node
