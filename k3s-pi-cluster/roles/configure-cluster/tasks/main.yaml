@@ -1,12 +1,12 @@
 - name: Taint master node
   become: true
   command: |
-    kubectl taint nodes {{ master_node_name }} CriticalAddonsOnly:NoSchedule --overwrite
+    kubectl taint nodes {{ ansible_hostname }} CriticalAddonsOnly:NoSchedule --overwrite
 
 - name: Label master node
   become: true
   command: |
-    kubectl label node {{ master_node_name }} node-type=master --overwrite
+    kubectl label node {{ ansible_hostname }} node-type=master --overwrite
 
 - name: Add NFS provider as default storage class
   become: true
