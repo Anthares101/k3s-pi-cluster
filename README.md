@@ -57,7 +57,7 @@ There is a extra playbook called `shutdown-nodes.yaml` that will just connect to
 ansible-playbook shutdown-nodes.yaml -K
 ```
 
-##Troubleshooting
+## Troubleshooting
 
 If the Grafana pod is not starting as it should, check that the `rpc-statd.service` service is running in the NFS server host.
 
