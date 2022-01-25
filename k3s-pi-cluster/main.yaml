@@ -1,5 +1,5 @@
 ---
-- name: Set up cluster-wide configuration
+- name: Initial setup
   hosts: nodes
   gather_facts: false
 
@@ -14,3 +14,19 @@
   roles:
     - role: pi-initial-setup
       tags: ['pi-initial-setup']
+
+- name: Configure the master node
+  hosts: master
+  gather_facts: false
+
+  roles:
+    - role: install-k3s-master
+      tags: ['install-k3s-master']
+
+- name: Configure the worker nodes
+  hosts: workers
+  gather_facts: false
+
+  roles:
+    - role: install-k3s-workers
+      tags: ['install-k3s-workers']

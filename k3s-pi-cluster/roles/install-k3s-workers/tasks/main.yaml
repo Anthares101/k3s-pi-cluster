@@ -1,0 +1,27 @@
+- name: Ensure cgroups are configured correctly in cmdline.txt
+  become: true
+  replace:
+    path: /boot/cmdline.txt
+    regexp: '^([\w](?!.*\b{{ item }}\b).*)$'
+    replace: '\1 {{ item }}'
+  with_items:
+    - "cgroup_memory=1"
+    - "cgroup_enable=memory"
+  notify: reboot-pi
+
+- name: Download K3s install script
+  become: true
+  get_url:
+    url: https://get.k3s.io
+    dest: "~/k3s_install.sh"
+    mode: a+x
+
+- name: Install K3s on nodes
+  become: true
+  ansible.builtin.shell: >-
+    K3S_URL=https://"{{ groups['master'][0] }}":6443
+    K3S_TOKEN="{{ hostvars[groups['master'][0]]['node_token'] }}"
+    ~/k3s_install.sh >> ~/k3s_install_log.txt
+  args:
+    chdir: "~"
+    creates: /var/lib/rancher/k3s/agent/kubelet.kubeconfig
