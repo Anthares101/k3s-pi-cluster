@@ -17,7 +17,7 @@ This configuration was tested with the following Raspberry Pi and OS combination
 - Raspberry Pi 4 model B and Raspberry Pi OS (32-bit)
 - Raspberry Pi 4 model B and Raspberry Pi OS (64-bit)
 
-Other configurations may work but you know, the have not been tested.
+Other configurations may work but you know, they have not been tested.
 
 ## Requisites
 
