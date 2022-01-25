@@ -9,6 +9,12 @@
     - "cgroup_enable=memory"
   notify: reboot-pi
 
+- name: Ensure openshift Python library is installed.
+  pip:
+    name: openshift
+    state: present
+  become: true
+
 - name: Download K3s install script
   become: true
   get_url:
