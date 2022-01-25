@@ -47,3 +47,10 @@ If you only need to execute part of it you can use the next tags (The names are 
 - `install-k3s-workers`
 - `install-nfs-server`
 - `configure-cluster`
+
+## Extra
+
+There is a extra playbook called `shutdown-nodes.yaml` that will just connect to every node in the cluster to shut it down. Useful to power off the cluster completely in a safer way:
+```
+ansible-playbook shutdown-nodes.yaml -K
+```
