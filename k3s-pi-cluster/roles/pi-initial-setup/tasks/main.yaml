@@ -17,7 +17,7 @@
 
 - name: Set the right timezone
   become: true
-  community.general.timezone:
+  timezone:
     name: '{{ timezone }}'
 
 - name: Secure pi home folder
