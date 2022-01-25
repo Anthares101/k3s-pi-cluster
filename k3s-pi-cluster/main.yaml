@@ -37,7 +37,7 @@
 
 - name: Configure cluster
   hosts: master
-  gather_facts: false
+  gather_facts: true
   tags: ['configure-cluster']
 
   collections:
