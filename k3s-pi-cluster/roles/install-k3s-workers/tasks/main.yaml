@@ -18,7 +18,7 @@
 
 - name: Install K3s on nodes
   become: true
-  ansible.builtin.shell: >-
+  shell: >-
     K3S_URL=https://"{{ groups['master'][0] }}":6443
     K3S_TOKEN="{{ hostvars[groups['master'][0]]['node_token'] }}"
     ~/k3s_install.sh >> ~/k3s_install_log.txt
