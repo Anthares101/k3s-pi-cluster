@@ -1,5 +1,5 @@
 - name: Disable Wifi and Bluetooth
-    become: true
+    become: yes
     lineinfile:
       dest: /boot/config.txt
       line: "{{ item.line }}"
@@ -10,13 +10,13 @@
     notify: reboot-pi
 
 - name: Disable sudo without password
-  become: true
+  become: yes
   file:
     path: /etc/sudoers.d/010_pi-nopasswd
     state: absent
 
 - name: Set the right timezone
-  become: true
+  become: yes
   community.general.timezone:
     name: '{{ timezone }}'
 
@@ -27,7 +27,7 @@
     mode: '0750'
 
 - name: Disable SSH root access and password auth
-  become: true
+  become: yes
   lineinfile:
     dest: /etc/ssh/sshd_config
     line: "{{ item.line }}"

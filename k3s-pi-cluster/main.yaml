@@ -2,7 +2,6 @@
 - name: Set up cluster-wide configuration
   hosts: nodes
   gather_facts: false
-  become: false
 
   collections:
     - community.kubernetes
@@ -14,4 +13,3 @@
   roles:
     - role: pi-initial-setup
       tags: ['pi-initial-setup']
-
