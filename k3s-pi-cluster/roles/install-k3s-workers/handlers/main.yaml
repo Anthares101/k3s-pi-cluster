@@ -1,2 +1,3 @@
 - name: reboot-pi
+  become: yes
   reboot:

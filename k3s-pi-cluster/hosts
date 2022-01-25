@@ -1,3 +1,5 @@
+localhost
+
 [workers]
 balthasar.lan
 casper.lan
@@ -8,4 +10,3 @@ melchior.lan
 [nodes:children]
 workers
 master
-

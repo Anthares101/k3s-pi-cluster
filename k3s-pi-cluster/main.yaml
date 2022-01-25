@@ -5,11 +5,6 @@
 
   collections:
     - community.general
-    - community.kubernetes
-  
-  environment:
-    # The location of the kubeconfig file in the local machine
-    K8S_AUTH_KUBECONFIG: ~/.kube/config
 
   roles:
     - role: pi-initial-setup
@@ -30,3 +25,19 @@
   roles:
     - role: install-k3s-workers
       tags: ['install-k3s-workers']
+
+- name: Configure NFS server
+  hosts: localhost
+  gather_facts: false
+
+  collections:
+    - community.general
+    - community.kubernetes
+  
+  environment:
+    # The location of the kubeconfig file in the local machine
+    K8S_AUTH_KUBECONFIG: ~/.kube/config
+  
+  roles:
+    - role: install-nfs-server
+      tags: ['install-nfs-server']

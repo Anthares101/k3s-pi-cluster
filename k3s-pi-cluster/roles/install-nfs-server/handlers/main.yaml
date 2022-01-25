@@ -1,0 +1,4 @@
+- name: load-exports
+  become: yes
+  shell:
+    cmd: exportfs -ra

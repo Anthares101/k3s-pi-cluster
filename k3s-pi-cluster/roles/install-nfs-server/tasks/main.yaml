@@ -1,0 +1,18 @@
+- name: Install nfs-kernel-server
+  become: yes
+  package:
+    name: nfs-kernel-server
+    state: present
+
+- name: Create a share directory if it does not exists
+  file:
+    path: '{{ nfs_share  }}'
+    state: directory
+    mode: '0755'
+
+- name: Configure NFS
+  become: yes
+  lineinfile:
+    dest: /etc/exports
+    line: '{{ exports_line }}' 
+  notify: load-exports
