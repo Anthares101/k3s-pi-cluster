@@ -1,5 +1,5 @@
 - name: reboot-pi
-    reboot:
+  reboot:
 - name: reload-sshd
   ansible.builtin.service:
     name: sshd
