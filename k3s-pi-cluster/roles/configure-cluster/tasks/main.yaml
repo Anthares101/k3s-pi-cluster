@@ -1,4 +1,8 @@
 - name: Taint master node
   become: true
   command: "kubectl taint nodes {{ master_node_name }} CriticalAddonsOnly:NoSchedule --overwrite"
-  ignore_errors: yes
+
+- name: Add NFS provider
+  template:
+    src: nfs-storage.yaml.j2
+    dest: /var/lib/rancher/k3s/server/manifests/nfs-storage.yaml
