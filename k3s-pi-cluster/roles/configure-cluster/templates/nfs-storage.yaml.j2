@@ -18,7 +18,7 @@ spec:
     storageClass.defaultClass: "true"
   valuesContent: |-
     nodeSelector:
-      node-role.kubernetes.io/master: true
+      node-type: master
     tolerations:
     - key: CriticalAddonsOnly
       operator: Exists
