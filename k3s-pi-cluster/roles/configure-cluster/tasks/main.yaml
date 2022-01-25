@@ -1,6 +1,6 @@
 - name: Get master taints
   become: true
   shell: |
-    [ $(kubectl describe node melchior | grep Taint | awk '{print $2}') == "<none>" ] && kubectl taint nodes '{{ master_node_name }}' CriticalAddonsOnly:NoSchedule
+    "[ $(kubectl describe node melchior | grep Taint | awk '{print $2}') == '<none>' ] && kubectl taint nodes {{ master_node_name }} CriticalAddonsOnly:NoSchedule"
   args:
     executable: /bin/bash
