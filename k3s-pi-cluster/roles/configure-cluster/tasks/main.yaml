@@ -1,9 +1,17 @@
 - name: Taint master node
   become: true
-  command: "kubectl taint nodes {{ master_node_name }} CriticalAddonsOnly:NoSchedule --overwrite"
+  command: |
+    kubectl taint nodes {{ master_node_name }} CriticalAddonsOnly:NoSchedule --overwrite
 
 - name: Add NFS provider
   become: true
   template:
     src: nfs-storage.yaml.j2
     dest: /var/lib/rancher/k3s/server/manifests/nfs-storage.yaml
+
+- name: Make local-storage provider non-default
+  become: true
+  lineinfile: 
+    path: /var/lib/rancher/k3s/server/manifests/local-storage.yaml
+    regexp: '^\ \ \ \ storageclass.kubernetes.io/is-default-class: "true"$' 
+    line: '    storageclass.kubernetes.io/is-default-class: "false"'
