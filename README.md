@@ -7,7 +7,7 @@ The [monitoring stack](https://github.com/carlosedp/cluster-monitoring) used is 
 This Playbook do a couple of things:
 - Perform initial setup in the cluster nodes
 - Install K3S in a cluster with 1 master and n workers nodes (Adapt `hosts.ini` to your needs)
-- Install an NFS server to allow the cluster to provide Persistent volumes to pods through a NFS provider.
+- Install an NFS server to allow the cluster to provide persistent volumes to pods through a NFS provider.
 - Install an NFS provider in the cluster
 - Install Prometheus - AlertManager - Grafana as monitoring stack out of the box
 
