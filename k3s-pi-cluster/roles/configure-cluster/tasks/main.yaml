@@ -2,6 +2,8 @@
   become: true
   shell: >
     "kubectl describe node {{ master_node_name }} | grep Taint | awk '{print $2}'"
+  args:
+    executable: /bin/bash
   register: master_taints
 
 - name: Taint master node
