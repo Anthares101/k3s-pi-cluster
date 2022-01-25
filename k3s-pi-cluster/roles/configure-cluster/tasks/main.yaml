@@ -20,3 +20,62 @@
     path: /var/lib/rancher/k3s/server/manifests/local-storage.yaml
     regexp: '^\ \ \ \ storageclass.kubernetes.io/is-default-class: "true"$' 
     line: '    storageclass.kubernetes.io/is-default-class: "false"'
+
+- name: Check if cluster-monitoring repo already exists.
+  stat:
+    path: ~/k3s/cluster-monitoring/vars.jsonnet
+  register: vars_file_exists
+
+- name: Retrieve and template cluster-monitoring manifests.
+  block:
+    - name: Clone the cluster-monitoring project.
+      git:
+        repo: https://github.com/carlosedp/cluster-monitoring.git
+        dest: ~/k3s/cluster-monitoring
+        version: "{{ cluster_monitoring_version }}"
+        force: yes
+
+    - name: Place our templated vars.jsonnet file.
+      template:
+        src: vars.jsonnet.j2
+        dest: ~/k3s/cluster-monitoring/vars.jsonnet
+
+    - name: Run 'vendor' cluster-monitoring target.
+      make:
+        chdir: ~/k3s/cluster-monitoring
+        target: vendor
+
+    - name: Run 'make' to generate all the K8s manifests.
+      make:
+        chdir: ~/k3s/cluster-monitoring
+
+  become: false
+  when: >
+    not vars_file_exists.stat.exists
+    or cluster_monitoring_update_repo | bool
+
+- name: Find all the manifests in the manifests/setup directory.
+  find:
+    paths: ~/k3s/cluster-monitoring/manifests/setup
+    file_type: file
+    patterns: '*.yaml,*.yml'
+  register: cluster_monitoring_setup_files
+
+- name: Apply cluster-monitoring setup manifests.
+  k8s:
+    src: "{{ item }}"
+    state: present
+  loop: "{{ cluster_monitoring_setup_files.files | sort(attribute='path') | map(attribute='path') | list }}"
+
+- name: Find all the manifests in the manifests directory.
+  find:
+    paths: ~/k3s/cluster-monitoring/manifests
+    file_type: file
+    patterns: '*.yaml,*.yml'
+  register: cluster_monitoring_files
+
+- name: Apply cluster-monitoring manifests.
+  k8s:
+    src: "{{ item }}"
+    state: present
+  loop: "{{ cluster_monitoring_files.files | sort(attribute='path') | map(attribute='path') | list }}"
