@@ -44,8 +44,7 @@
     - community.kubernetes
   
   environment:
-    # The location of the kubeconfig file in the local machine
-    K8S_AUTH_KUBECONFIG: ~/.kube/config
+    K8S_AUTH_KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   
   roles:
     - role: configure-cluster
