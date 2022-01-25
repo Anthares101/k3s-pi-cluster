@@ -10,7 +10,7 @@
     state: directory
     mode: '0755'
 
-- name: Configure NFS
+- name: Update NFS shares
   become: yes
   lineinfile:
     dest: /etc/exports
