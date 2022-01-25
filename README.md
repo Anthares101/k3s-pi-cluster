@@ -33,6 +33,8 @@ You can tweak the next variables under the `group_vars` folder:
 - `cluster_monitoring_update_repo`: If you change the `cluster_monitoring_version` above set this to true to force the update
 - `grafana_from_email`: The admin email used in Grafana
 
+## Usage
+
 Just execute the playbook and go for a coffee:
 ```
 ansible-playbook main.yaml -K
