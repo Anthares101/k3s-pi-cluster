@@ -1,0 +1,6 @@
+- name: reboot-pi
+    reboot:
+- name: reload-sshd
+  ansible.builtin.service:
+    name: sshd
+    state: reloaded

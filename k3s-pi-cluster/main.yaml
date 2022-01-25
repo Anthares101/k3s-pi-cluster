@@ -1,0 +1,17 @@
+---
+- name: Set up cluster-wide configuration
+  hosts: nodes
+  gather_facts: false
+  become: false
+
+  collections:
+    - community.kubernetes
+  
+  environment:
+    # The location of the kubeconfig file in the local machine
+    K8S_AUTH_KUBECONFIG: ~/.kube/config
+
+  roles:
+    - role: pi-initial-setup
+      tags: ['pi-initial-setup']
+
