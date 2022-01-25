@@ -1,22 +1,22 @@
 - name: Disable Wifi and Bluetooth
-    become: yes
-    lineinfile:
-      dest: /boot/config.txt
-      line: "{{ item.line }}"
-    loop:
-      - { line: 'dtoverlay=pi3-disable-wifi' }
-      - { line: 'dtoverlay=pi3-disable-bt' }
-    register: ssh_conf
-    notify: reboot-pi
+  become: true
+  lineinfile:
+    dest: /boot/config.txt
+    line: "{{ item.line }}"
+  loop:
+    - { line: 'dtoverlay=pi3-disable-wifi' }
+    - { line: 'dtoverlay=pi3-disable-bt' }
+  register: ssh_conf
+  notify: reboot-pi
 
 - name: Disable sudo without password
-  become: yes
+  become: true
   file:
     path: /etc/sudoers.d/010_pi-nopasswd
     state: absent
 
 - name: Set the right timezone
-  become: yes
+  become: true
   community.general.timezone:
     name: '{{ timezone }}'
 
@@ -27,7 +27,7 @@
     mode: '0750'
 
 - name: Disable SSH root access and password auth
-  become: yes
+  become: true
   lineinfile:
     dest: /etc/ssh/sshd_config
     line: "{{ item.line }}"
