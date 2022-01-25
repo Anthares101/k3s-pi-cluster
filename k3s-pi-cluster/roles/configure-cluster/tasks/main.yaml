@@ -1,4 +1,9 @@
+- name: Get master taints
+  become: true
+  command: "kubectl describe node {{ master_node_name }} | grep Taint | awk '{print $2}'"
+  register: master_taints
+
 - name: Taint master node
   become: true
   command: "kubectl taint nodes {{ master_node_name }} CriticalAddonsOnly:NoSchedule"
-  ignore_errors: yes
+  when: "{{ node_token_output.stdout_lines[0] }} == <none>"
