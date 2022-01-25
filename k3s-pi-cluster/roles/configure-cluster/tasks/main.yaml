@@ -21,6 +21,12 @@
     regexp: '^\ \ \ \ storageclass.kubernetes.io/is-default-class: "true"$' 
     line: '    storageclass.kubernetes.io/is-default-class: "false"'
 
+- name: Create a k3s directory if it does not exists
+  file:
+    path: ~/k3s
+    state: directory
+    mode: '0755'
+
 - name: Check if cluster-monitoring repo already exists.
   stat:
     path: ~/k3s/cluster-monitoring/vars.jsonnet
