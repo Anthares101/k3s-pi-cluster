@@ -41,7 +41,7 @@ Just execute the playbook and go for a coffee:
 ```
 ansible-playbook main.yaml -K
 ```
-After the installation you can find the cluster `kubeconfig` file in the master node under: `/etc/rancher/k3s/k3s. yaml`
+After the installation you can find the cluster `kubeconfig` file in the master node under: `/etc/rancher/k3s/k3s. yaml`.
 
 If you only need to execute part of it you can use the next tags (The names are self explanatory):
 - `pi-initial-setup`
