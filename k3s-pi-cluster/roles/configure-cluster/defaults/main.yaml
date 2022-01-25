@@ -8,4 +8,4 @@ cluster_monitoring_version: c0807b6
 cluster_monitoring_update_repo: false
 
 grafana_from_email: myemail@gmail.com
-suffix_domain: magi.lan
+suffix_domain: cluster.lan

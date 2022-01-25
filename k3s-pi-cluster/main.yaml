@@ -27,8 +27,7 @@
     - role: install-k3s-workers
 
 - name: Configure NFS server
-  hosts: localhost
-  connection: local
+  hosts: nfs
   gather_facts: false
   tags: ['install-nfs-server']
   

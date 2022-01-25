@@ -1,4 +1,4 @@
 ---
 timezone: Europe/Madrid
-nfs_server_ip: 192.168.0.2
 nfs_share: /home/pi/Raid/NFS
+suffix_domain: magi.lan
