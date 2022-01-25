@@ -3,13 +3,13 @@
   command: |
     kubectl taint nodes {{ master_node_name }} CriticalAddonsOnly:NoSchedule --overwrite
 
-- name: Add NFS provider
+- name: Add NFS provider as default storage class
   become: true
   template:
     src: nfs-storage.yaml.j2
     dest: /var/lib/rancher/k3s/server/manifests/nfs-storage.yaml
 
-- name: Make local-storage provider non-default
+- name: Make local-storage provider non-default storage class
   become: true
   lineinfile: 
     path: /var/lib/rancher/k3s/server/manifests/local-storage.yaml

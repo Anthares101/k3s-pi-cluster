@@ -9,8 +9,8 @@ spec:
   repo: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
   targetNamespace: kube-system
   set:
-    nfs.server: {{ nfs_server_ip }}
-    nfs.path: {{ nfs_share }}
+    nfs.server: '{{ nfs_server_ip }}'
+    nfs.path: '{{ nfs_share }}'
     storageClass.name: nfs-storage
     storageClass.accessModes: ReadWriteMany
     storageClass.reclaimPolicy: Retain
