@@ -31,9 +31,16 @@
   connection: local
   gather_facts: false
   tags: ['install-nfs-server']
+  
+  roles:
+    - role: install-nfs-server
+
+- name: Configure cluster
+  hosts: master
+  gather_facts: false
+  tags: ['configure-cluster']
 
   collections:
-    - community.general
     - community.kubernetes
   
   environment:
@@ -41,4 +48,4 @@
     K8S_AUTH_KUBECONFIG: ~/.kube/config
   
   roles:
-    - role: install-nfs-server
+    - role: configure-cluster

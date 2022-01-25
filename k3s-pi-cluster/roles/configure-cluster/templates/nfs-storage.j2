@@ -1,0 +1,25 @@
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: nfs-storage
+  namespace: kube-system
+spec:
+  chart: nfs-subdir-external-provisioner
+  repo: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+  targetNamespace: kube-system
+  set:
+    nfs.server: {{ nfs_server_ip }}
+    nfs.path: {{ nfs_share }}
+    storageClass.name: nfs-storage
+    storageClass.accessModes: ReadWriteMany
+    storageClass.reclaimPolicy: Retain
+    storageClass.archiveOnDelete: "false"
+    storageClass.defaultClass: "true"
+  valuesContent: |-
+    nodeSelector:
+      node-role.kubernetes.io/master: true
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+        effect: NoSchedule

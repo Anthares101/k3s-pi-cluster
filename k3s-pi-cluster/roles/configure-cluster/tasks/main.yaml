@@ -1,0 +1,4 @@
+- name: Taint master node
+  become: '{{ become_for_kubectl }}'
+  command: "kubectl taint nodes {{ groups['master'][0] }} CriticalAddonsOnly:NoSchedule"
+  ignore_errors: yes

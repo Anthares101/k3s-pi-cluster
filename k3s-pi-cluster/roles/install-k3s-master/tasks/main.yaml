@@ -19,7 +19,7 @@
 - name: Install K3s control plane (takes a while)
   become: true
   shell: >-
-    ~/k3s_install.sh >> ~/k3s_install_log.txt
+    ~/k3s_install.sh --disable metrics-server >> ~/k3s_install_log.txt
   args:
     chdir: "~"
     creates: /var/lib/rancher/k3s/server/node-token
@@ -32,13 +32,3 @@
 - name: Set node_token fact
   set_fact:
     node_token: "{{ node_token_output.stdout_lines[0] }}"
-
-- name: Install K3s on nodes
-  become: true
-  shell: >-
-    K3S_URL=https://"{{ groups['master'][0] }}":6443
-    K3S_TOKEN="{{ hostvars[groups['master'][0]]['node_token'] }}"
-    ~/k3s_install.sh --disable metrics-server >> ~/k3s_install_log.txt
-  args:
-    chdir: "~"
-    creates: /var/lib/rancher/k3s/agent/kubelet.kubeconfig
