@@ -3,4 +3,3 @@ timezone: Europe/Madrid
 nfs_server_ip: 192.168.0.2
 nfs_share: /home/pi/Raid/NFS
 exports_line: '{{ nfs_share }} melchior(rw,fsid=0,all_squash,sync,no_subtree_check,anonuid=1000,anongid=1000) casper(rw,fsid=0,all_squash,sync,no_subtree_check,anonuid=1000,anongid=1000) balthasar(rw,fsid=0,all_squash,sync,no_subtree_check,anonuid=1000,anongid=1000)'
-become_for_kubectl: false
