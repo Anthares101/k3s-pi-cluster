@@ -14,5 +14,5 @@
   become: yes
   lineinfile:
     dest: /etc/exports
-    line: "{{ nfs_share }}{% for node in groups['nodes'] %} {{ node }}(rw,fsid=0,all_squash,sync,no_subtree_check,anonuid=1000,anongid=1000){% endfor %}"
+    line: "{{ nfs_share }}{% for node in groups['nodes'] %} {{ node }}(rw,fsid=0,all_squash,async,no_subtree_check,anonuid=1000,anongid=1000){% endfor %}"
   notify: load-exports
