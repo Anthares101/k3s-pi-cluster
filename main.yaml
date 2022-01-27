@@ -37,7 +37,6 @@
 - name: Configure cluster
   hosts: master
   gather_facts: true
-  tags: ['configure-cluster']
 
   collections:
     - community.kubernetes
@@ -46,4 +45,8 @@
     K8S_AUTH_KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   
   roles:
-    - role: configure-cluster
+    - role: configure-monitoring
+      tags: ['configure-monitoring']
+    
+    - role: install-calico
+      tags: ['install-calico']

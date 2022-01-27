@@ -13,6 +13,7 @@
   template:
     src: nfs-storage.yaml.j2
     dest: /var/lib/rancher/k3s/server/manifests/nfs-storage.yaml
+    mode: 0600
 
 - name: Make local-storage provider non-default storage class
   become: true
@@ -81,24 +82,8 @@
 
 - name: Apply cluster-monitoring manifests
   become: true
+  ignore_errors: yes
   k8s:
     src: "{{ item }}"
     state: present
   loop: "{{ cluster_monitoring_files.files | sort(attribute='path') | map(attribute='path') | list }}"
-
-- name: Get cluster cidr
-  become: true
-  command: kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
-  register: cluster_cidr
-
-- name: Install Calico to enable Network policies
-  become: true
-  lineinfile:
-    dest: /var/lib/rancher/k3s/server/manifests/canal
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
-  loop:
-    - { regexp: '^            # - name: CALICO_IPV4POOL_CIDR$', line: '            - name: CALICO_IPV4POOL_CIDR' }
-    - { regexp: '^            #   value: "192.168.0.0/16"$', line: '              value: "{{ cluster_cidr.stdout_lines[0] }}"' }
-  register: ssh_conf
-  notify: reboot-pi

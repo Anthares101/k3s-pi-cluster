@@ -10,6 +10,7 @@ This Playbook do a couple of things:
 - Install an NFS server to allow the cluster to provide persistent volumes to pods through a NFS provider.
 - Install an NFS provider in the cluster
 - Install Prometheus - AlertManager - Grafana as monitoring stack out of the box
+- Install Calico to support network policies
 
 ## Compatibility
 
@@ -48,7 +49,8 @@ If you only need to execute part of it you can use the next tags (The names are 
 - `install-k3s-master`
 - `install-k3s-workers`
 - `install-nfs-server`
-- `configure-cluster`
+- `configure-monitoring`
+- `install-calico`
 
 ## Extra
 
