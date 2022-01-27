@@ -3,14 +3,14 @@
   get_url:
     url: https://docs.projectcalico.org/manifests/canal.yaml
     dest: /var/lib/rancher/k3s/server/manifests/canal
-    mode: '0660'
+    mode: '0600'
 
-- name: Get cluster cidr
+- name: Get cluster cidr blocks
   become: true
   command: kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
   register: cluster_cidr
 
-- name: Install Calico to enable Network policies
+- name: Tweak Calico for k3s
   become: true
   lineinfile:
     dest: /var/lib/rancher/k3s/server/manifests/canal
@@ -20,3 +20,6 @@
     - { regexp: '^            # - name: CALICO_IPV4POOL_CIDR$', line: '            - name: CALICO_IPV4POOL_CIDR' }
     - { regexp: '^            #   value: "192.168.0.0/16"$', line: '              value: "{{ cluster_cidr.stdout_lines[0] }}"' }
   register: ssh_conf
+
+- name: Install Calico to enable Network policies
+  command: mv /var/lib/rancher/k3s/server/manifests/canal /var/lib/rancher/k3s/server/manifests/canal.yaml
