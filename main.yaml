@@ -45,8 +45,8 @@
     K8S_AUTH_KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   
   roles:
-    - role: configure-monitoring
-      tags: ['configure-monitoring']
+    - role: configure-cluster
+      tags: ['configure-cluster']
     
     - role: install-calico
       tags: ['install-calico']

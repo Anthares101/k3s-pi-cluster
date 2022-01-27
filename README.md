@@ -49,7 +49,7 @@ If you only need to execute part of it you can use the next tags (The names are 
 - `install-k3s-master`
 - `install-k3s-workers`
 - `install-nfs-server`
-- `configure-monitoring`
+- `configure-cluster`
 - `install-calico`
 
 ## Extra
