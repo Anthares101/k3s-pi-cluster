@@ -22,4 +22,5 @@
   register: ssh_conf
 
 - name: Install Calico to enable Network policies
+  become: true
   command: mv /var/lib/rancher/k3s/server/manifests/canal /var/lib/rancher/k3s/server/manifests/canal.yaml
