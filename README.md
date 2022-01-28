@@ -35,6 +35,7 @@ You can tweak the next variables under the `group_vars` folder:
 - `cluster_monitoring_version`: The version of the cluster-monitoring repo to check out
 - `cluster_monitoring_update_repo`: If you change the `cluster_monitoring_version` above set this to true to force the update
 - `grafana_from_email`: The admin email used in Grafana
+- `certmanager_version`: cert-manager version to install
 - `letsencrypt_email`: The email to use for the letsencrypt certificates
 
 ## Usage
