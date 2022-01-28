@@ -5,11 +5,6 @@
     dest: /var/lib/rancher/k3s/server/manifests/canal
     mode: '0600'
 
-- name: Get cluster cidr blocks
-  become: true
-  command: kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
-  register: cluster_cidr
-
 - name: Tweak Calico for k3s
   become: true
   lineinfile:
@@ -18,7 +13,7 @@
     line: "{{ item.line }}"
   loop:
     - { regexp: '^            # - name: CALICO_IPV4POOL_CIDR$', line: '            - name: CALICO_IPV4POOL_CIDR' }
-    - { regexp: '^            #   value: "192.168.0.0/16"$', line: '              value: "{{ cluster_cidr.stdout_lines[0] }}"' }
+    - { regexp: '^            #   value: "192.168.0.0/16"$', line: '              value: "10.42.0.0/16"' }
   register: ssh_conf
 
 - name: Install Calico to enable Network policies as addon
