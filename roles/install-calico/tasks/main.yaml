@@ -21,6 +21,6 @@
     - { regexp: '^            #   value: "192.168.0.0/16"$', line: '              value: "{{ cluster_cidr.stdout_lines[0] }}"' }
   register: ssh_conf
 
-- name: Install Calico to enable Network policies
+- name: Install Calico to enable Network policies as addon
   become: true
   command: mv /var/lib/rancher/k3s/server/manifests/canal /var/lib/rancher/k3s/server/manifests/canal.yaml

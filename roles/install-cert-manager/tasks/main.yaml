@@ -1,12 +1,30 @@
 ---
 - name: Get cert-manager manifests
   get_url:
+    become: true
     url: https://github.com/jetstack/cert-manager/releases/download/{{ certmanager_version }}/cert-manager.yaml
-    dest: /tmp/cert-manager.yaml
+    dest: /var/lib/rancher/k3s/server/manifests/cert-manager
     mode: '0600'
 
 - name: Modify the manifest for arm
   replace:
-    path: /tmp/cert-manager.yaml
+    become: true
+    path: /var/lib/rancher/k3s/server/manifests/cert-manager
     regexp: '(image:.*):(v.*)$'
     replace: '\1-arm:\2'
+
+- name: Install cert-manager as addon
+  become: true
+  command: mv /var/lib/rancher/k3s/server/manifests/cert-manager /var/lib/rancher/k3s/server/manifests/cert-manager.yaml
+
+- name: Install letsencrypt cluster issuer as addon
+  become: true
+  template:
+    src: letsencrypt.yaml.j2
+    dest: /var/lib/rancher/k3s/server/manifests/letsencrypt.yaml
+
+- name: Install letsencrypt-staging cluster issuer as addon
+  become: true
+  template:
+    src: letsencrypt-staging.yaml.j2
+    dest: /var/lib/rancher/k3s/server/manifests/letsencrypt-staging.yaml
