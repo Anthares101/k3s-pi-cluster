@@ -1,0 +1,12 @@
+---
+- name: Get cert-manager manifests
+  get_url:
+    url: https://github.com/jetstack/cert-manager/releases/download/{{ certmanager_version }}/cert-manager.yaml
+    dest: /tmp/cert-manager.yaml
+    mode: '0600'
+
+- name: Modify the manifest for arm
+  replace:
+    path: /tmp/cert-manager.yaml
+    regexp: '(image:.*):(v.*)$'
+    replace: '\1-arm:\2'

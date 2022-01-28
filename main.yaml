@@ -45,8 +45,11 @@
     K8S_AUTH_KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   
   roles:
-    - role: configure-cluster
-      tags: ['configure-cluster']
+    - role: basic-cluster-setup
+      tags: ['basic-cluster-setup']
     
     - role: install-calico
       tags: ['install-calico']
+    
+    - role: install-cert-manager
+      tags: ['install-cert-manager']

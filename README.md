@@ -8,9 +8,9 @@ This Playbook do a couple of things:
 - Perform initial setup in the cluster nodes
 - Install K3S in a cluster with 1 master and n workers nodes (Adapt `hosts.ini` to your needs)
 - Install an NFS server to allow the cluster to provide persistent volumes to pods through a NFS provider.
-- Install an NFS provider in the cluster
-- Install Prometheus - AlertManager - Grafana as monitoring stack out of the box
+- Install an NFS provider and Prometheus - AlertManager - Grafana as monitoring stack out of the box
 - Install Calico to support network policies
+- Install cert-manager with letsencrypt as issuer to allow valid https certificates
 
 ## Compatibility
 
@@ -35,6 +35,7 @@ You can tweak the next variables under the `group_vars` folder:
 - `cluster_monitoring_version`: The version of the cluster-monitoring repo to check out
 - `cluster_monitoring_update_repo`: If you change the `cluster_monitoring_version` above set this to true to force the update
 - `grafana_from_email`: The admin email used in Grafana
+- `letsencrypt_email`: The email to use for the letsencrypt certificates
 
 ## Usage
 
@@ -49,8 +50,9 @@ If you only need to execute part of it you can use the next tags (The names are 
 - `install-k3s-master`
 - `install-k3s-workers`
 - `install-nfs-server`
-- `configure-cluster`
+- `basic-cluster-setup`
 - `install-calico`
+- `install-cert-manager`
 
 ## Extra
 
@@ -62,5 +64,3 @@ ansible-playbook shutdown-nodes.yaml -K
 ## Troubleshooting
 
 If the Grafana pod is not starting as it should, check that the `rpc-statd.service` service is running in the NFS server host.
-
-
