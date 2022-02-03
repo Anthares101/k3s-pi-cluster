@@ -37,6 +37,7 @@ You can tweak the next variables under the `group_vars` folder:
 - `grafana_from_email`: The admin email used in Grafana
 - `certmanager_version`: cert-manager version to install
 - `letsencrypt_email`: The email to use for the letsencrypt certificates
+- `externalTrafficPolicy`: Let you decide what policy the Traefik load balance should follow. [More information](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip)
 
 ## Usage
 
