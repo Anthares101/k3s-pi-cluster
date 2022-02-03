@@ -56,6 +56,32 @@ If you only need to execute part of it you can use the next tags (The names are 
 - `install-calico`
 - `install-cert-manager`
 
+## Exposing your cluster to the Internet
+
+**NOTE:** `externalTrafficPolicy` must be configured to `Local` in order for this steps to work
+
+To expose our ingresses to the internet we need to prepare some things to avoid problems. Since we are going to have private services that can be reached through an ingress we need to create a traefik middleware for all the ingresses we want to make private to prevent traffic from the internet to go to them:
+```yaml
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: private
+  namespace: kube-system
+spec:
+  ipWhiteList:
+    sourceRange:
+      - 127.0.0.1/32
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+```
+
+Once we have that in the cluster the only thing left is asking traefik to use it where we want. Just add this to the metadata section of the Ingresses you don’t want to be accesible from the internet: 
+```yaml
+annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: kube-system-private@kubernetescrd
+```
+
 ## Extra
 
 There is a extra playbook called `shutdown-nodes.yaml` that will just connect to every node in the cluster to shut it down. Useful to power off the cluster completely in a safer way:
