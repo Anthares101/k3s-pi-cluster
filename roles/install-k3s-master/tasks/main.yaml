@@ -25,7 +25,7 @@
 - name: Install K3s control plane (takes a while)
   become: true
   shell: >-
-    ~/k3s_install.sh --disable metrics-server,traefik >> ~/k3s_install_log.txt
+    ~/k3s_install.sh --no-deploy metrics-server,traefik >> ~/k3s_install_log.txt
   args:
     chdir: "~"
     creates: /var/lib/rancher/k3s/server/node-token
