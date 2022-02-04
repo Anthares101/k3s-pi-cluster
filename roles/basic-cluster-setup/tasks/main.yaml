@@ -1,4 +1,4 @@
-- name: Taint master node if workers node available
+- name: Taint master node if workers available
   become: true
   command: |
     kubectl taint nodes {{ ansible_hostname }} CriticalAddonsOnly:NoSchedule --overwrite
