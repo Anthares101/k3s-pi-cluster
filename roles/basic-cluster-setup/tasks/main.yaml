@@ -1,7 +1,8 @@
-- name: Taint master node
+- name: Taint master node if workers node available
   become: true
   command: |
     kubectl taint nodes {{ ansible_hostname }} CriticalAddonsOnly:NoSchedule --overwrite
+  when: groups['workers'] | length > 0
 
 - name: Label master node
   become: true
@@ -88,7 +89,7 @@
     state: present
   loop: "{{ cluster_monitoring_files.files | sort(attribute='path') | map(attribute='path') | list }}"
 
-- name: Tweak Traefik a bit
+- name: Install Traefik with custom config
   become: true
   template:
     src: traefik.yaml.j2
