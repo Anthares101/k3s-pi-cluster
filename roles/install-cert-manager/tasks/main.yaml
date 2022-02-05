@@ -40,5 +40,5 @@
         template:
           src: letsencrypt-cloudflare.yaml.j2
           dest: /var/lib/rancher/k3s/server/manifests/letsencrypt-cloudflare.yaml
-  when: cloudflare_email != "" and cloudflare_token != ""
-  become: true
+    when: cloudflare_email != "" and cloudflare_token != ""
+    become: true
