@@ -1,3 +1,5 @@
 ---
 letsencrypt_email: admin@email.com
 certmanager_version: v1.7.0
+cloudflare_email: ""
+cloudflare_token: ""

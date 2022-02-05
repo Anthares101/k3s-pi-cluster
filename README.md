@@ -10,7 +10,7 @@ This Playbook do a couple of things:
 - Install an NFS server to allow the cluster to provide persistent volumes to pods through a NFS provider.
 - Install an NFS provider and Prometheus - AlertManager - Grafana as monitoring stack out of the box
 - Install Calico to support network policies
-- Install cert-manager with letsencrypt as issuer to allow valid https certificates
+- Install cert-manager with some letsencrypt issuers to allow the creation of valid https certificates
 
 ## Compatibility
 
@@ -36,6 +36,7 @@ You can tweak the next variables under the `group_vars` folder:
 - `cluster_monitoring_update_repo`: If you change the `cluster_monitoring_version` above set this to true to force the update
 - `grafana_from_email`: The admin email used in Grafana
 - `certmanager_version`: cert-manager version to install
+- `cloudflare_email` and `cloudflare_token`: If you set this two variables the playbook will install a cluster issuer that will use Cloudflare API for letsencrypt certificates instead of the http challenge
 - `letsencrypt_email`: The email to use for the letsencrypt certificates
 - `externalTrafficPolicy`: Let you decide what policy the Traefik load balancer should follow. [More information](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip)
 
