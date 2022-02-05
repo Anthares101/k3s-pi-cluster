@@ -30,15 +30,15 @@
     dest: /var/lib/rancher/k3s/server/manifests/letsencrypt-staging.yaml
 
 - name: Install letsencrypt-cloudflare cluster issuer as addon
-    block:
-      - name: Install cloudflare token secret
-        template:
-          src: cloudflare-api-token.yaml.j2
-          dest: /var/lib/rancher/k3s/server/manifests/cloudflare-api-token.yaml
+  block:
+    - name: Install cloudflare token secret
+      template:
+        src: cloudflare-api-token.yaml.j2
+        dest: /var/lib/rancher/k3s/server/manifests/cloudflare-api-token.yaml
         
-      - name: Install letsencrypt-cloudflare cluster issuer
-        template:
-          src: letsencrypt-cloudflare.yaml.j2
-          dest: /var/lib/rancher/k3s/server/manifests/letsencrypt-cloudflare.yaml
-    when: cloudflare_email != "" and cloudflare_token != ""
-    become: true
+    - name: Install letsencrypt-cloudflare cluster issuer
+      template:
+        src: letsencrypt-cloudflare.yaml.j2
+        dest: /var/lib/rancher/k3s/server/manifests/letsencrypt-cloudflare.yaml
+  when: cloudflare_email != "" and cloudflare_token != ""
+  become: true
