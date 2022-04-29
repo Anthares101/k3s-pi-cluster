@@ -6,7 +6,27 @@
   loop:
     - { line: 'dtoverlay=pi3-disable-wifi' }
     - { line: 'dtoverlay=pi3-disable-bt' }
-  register: ssh_conf
+  notify: reboot-pi
+  
+- name: Ensure apparmor and apparmor-utils are installed
+  become: true
+  apt:
+    name: 
+      - apparmor
+      - apparmor-utils
+    state: present
+    update_cache: true
+  notify: reboot-pi
+
+- name: Ensure apparmor is enabled in cmdline.txt
+  become: true
+  replace:
+    path: /boot/cmdline.txt
+    regexp: '^([\w](?!.*\b{{ item }}\b).*)$'
+    replace: '\1 {{ item }}'
+  with_items:
+    - "apparmor=1"
+    - "security=apparmor"
   notify: reboot-pi
 
 - name: Disable sudo without password
