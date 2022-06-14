@@ -88,10 +88,3 @@
     src: "{{ item }}"
     state: present
   loop: "{{ cluster_monitoring_files.files | sort(attribute='path') | map(attribute='path') | list }}"
-
-- name: Install Traefik with custom config
-  become: true
-  template:
-    src: traefik.yaml.j2
-    dest: /var/lib/rancher/k3s/server/manifests/traefik.yaml
-    mode: 0600

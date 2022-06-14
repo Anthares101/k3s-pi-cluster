@@ -38,7 +38,6 @@ You can tweak the next variables under the `group_vars` folder:
 - `certmanager_version`: cert-manager version to install
 - `cloudflare_email` and `cloudflare_token`: If you set this two variables the playbook will install a cluster issuer that will use Cloudflare API for letsencrypt certificates instead of the http challenge
 - `letsencrypt_email`: The email to use for the letsencrypt certificates
-- `externalTrafficPolicy`: Let you decide what policy the Traefik load balancer should follow. [More information](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip)
 
 ## Usage
 
@@ -59,7 +58,7 @@ If you only need to execute part of it you can use the next tags (The names are 
 
 ## Exposing your cluster to the Internet
 
-**NOTE:** `externalTrafficPolicy` variable must be configured to `Local` in order for this steps to work
+**NOTE:** `externalTrafficPolicy` must be configured to `Local` in order for this steps to work. [More Information](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip)
 
 To expose our ingresses to the internet we need to prepare some things to avoid problems. Since we are going to have private services that can be reached through an ingress we need to create a traefik middleware for all the ingresses we want to make private to prevent traffic from the internet to go to them:
 ```yaml
