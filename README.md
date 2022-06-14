@@ -38,6 +38,7 @@ You can tweak the next variables under the `group_vars` folder:
 - `certmanager_version`: cert-manager version to install
 - `cloudflare_email` and `cloudflare_token`: If you set this two variables the playbook will install a cluster issuer that will use Cloudflare API for letsencrypt certificates instead of the http challenge
 - `letsencrypt_email`: The email to use for the letsencrypt certificates
+- `externalTrafficPolicy`: Let you decide what policy the Traefik load balancer should follow. [More information](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip)
 
 ## Usage
 
