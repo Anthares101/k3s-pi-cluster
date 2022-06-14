@@ -59,7 +59,7 @@ If you only need to execute part of it you can use the next tags (The names are 
 
 ## Exposing your cluster to the Internet
 
-**NOTE:** `externalTrafficPolicy` must be configured to `Local` in order for this steps to work. [More Information](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip)
+**NOTE:** `externalTrafficPolicy` must be configured to `Local` in order for this steps to work
 
 To expose our ingresses to the internet we need to prepare some things to avoid problems. Since we are going to have private services that can be reached through an ingress we need to create a traefik middleware for all the ingresses we want to make private to prevent traffic from the internet to go to them:
 ```yaml
