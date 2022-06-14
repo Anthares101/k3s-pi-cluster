@@ -22,12 +22,14 @@
   template:
     src: letsencrypt.yaml.j2
     dest: /var/lib/rancher/k3s/server/manifests/letsencrypt.yaml
+    mode: 0600
 
 - name: Install letsencrypt-staging cluster issuer as addon
   become: true
   template:
     src: letsencrypt-staging.yaml.j2
     dest: /var/lib/rancher/k3s/server/manifests/letsencrypt-staging.yaml
+    mode: 0600
 
 - name: Install letsencrypt-cloudflare cluster issuer as addon
   block:
@@ -35,10 +37,12 @@
       template:
         src: cloudflare-api-token.yaml.j2
         dest: /var/lib/rancher/k3s/server/manifests/cloudflare-api-token.yaml
+        mode: 0600
         
     - name: Install letsencrypt-cloudflare cluster issuer
       template:
         src: letsencrypt-cloudflare.yaml.j2
         dest: /var/lib/rancher/k3s/server/manifests/letsencrypt-cloudflare.yaml
+        mode: 0600
   when: cloudflare_email != "" and cloudflare_token != ""
   become: true
