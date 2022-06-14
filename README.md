@@ -85,7 +85,7 @@ annotations:
 
 ## Extra
 
-There is a extra playbook called `shutdown-nodes.yaml` that will just connect to every node in the cluster to shut it down. Useful to power off the cluster completely in a safer way:
+There is an extra playbook called `shutdown-nodes.yaml` that will just connect to every node in the cluster to shut it down. Useful to power off the cluster completely in a safer way:
 ```
 ansible-playbook shutdown-nodes.yaml -K
 ```
