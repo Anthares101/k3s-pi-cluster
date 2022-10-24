@@ -54,6 +54,8 @@
 
   // Domain suffix for the ingresses
   suffixDomain: '{{ suffix_domain }}',
+  // Additional domain suffixes for the ingresses.
+  additionalDomains: [],
   // If TLSingress is true, a self-signed HTTPS ingress with redirect will be created
   TLSingress: true,
   // If UseProvidedCerts is true, provided files will be used on created HTTPS ingresses.
