@@ -9,7 +9,6 @@ This Playbook do a couple of things:
 - Install K3S in a cluster with 1 master and n workers nodes (Adapt `hosts.ini` to your needs)
 - Install an NFS server to allow the cluster to provide persistent volumes to pods through a NFS provider.
 - Install an NFS provider and Prometheus - AlertManager - Grafana as monitoring stack out of the box
-- Install Calico to support network policies
 - Install cert-manager with some letsencrypt issuers to allow the creation of valid https certificates
 
 ## Compatibility
@@ -54,7 +53,6 @@ If you only need to execute part of it you can use the next tags (The names are 
 - `install-k3s-workers`
 - `install-nfs-server`
 - `basic-cluster-setup`
-- `install-calico`
 - `install-cert-manager`
 
 ## Exposing your cluster to the Internet
