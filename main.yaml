@@ -48,8 +48,5 @@
     - role: basic-cluster-setup
       tags: ['basic-cluster-setup']
     
-    - role: install-calico
-      tags: ['install-calico']
-    
     - role: install-cert-manager
       tags: ['install-cert-manager']
