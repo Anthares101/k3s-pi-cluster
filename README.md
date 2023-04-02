@@ -91,4 +91,3 @@ ansible-playbook shutdown-nodes.yaml -K
 ## Troubleshooting
 
 - If the Grafana pod is not starting as it should, check that the `rpc-statd.service` service is running in the NFS server host.
-- If you find that the canal pods are crashing with this message in the logs: `flannel.1. Link has incompatible address` try deleting the `flannel.1` interface in all nodes: `sudo ip link delete flannel.1`.
