@@ -17,8 +17,6 @@ spec:
     storageClass.archiveOnDelete: "false"
     storageClass.defaultClass: "true"
   valuesContent: |-
-    nodeSelector:
-      node-type: master
     tolerations:
     - key: CriticalAddonsOnly
       operator: Exists
