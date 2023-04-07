@@ -4,11 +4,6 @@
     kubectl taint nodes {{ ansible_hostname }} CriticalAddonsOnly:NoSchedule --overwrite
   when: groups['workers'] | length > 0
 
-- name: Label master node
-  become: true
-  command: |
-    kubectl label node {{ ansible_hostname }} node-type=master --overwrite
-
 - name: Add NFS provider as default storage class
   become: true
   template:
