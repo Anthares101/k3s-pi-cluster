@@ -55,6 +55,12 @@ If you only need to execute part of it you can use the next tags (The names are 
 - `basic-cluster-setup`
 - `install-cert-manager`
 
+Also, it is recomended to change the next line in `/var/lib/rancher/k3s/server/manifests/local-storage.yaml` after installation:
+
+```yaml
+storageclass.kubernetes.io/is-default-class: "true" # Set this to false to make sure you use NFS as the default storage class
+```
+
 ## Exposing your cluster to the Internet
 
 **NOTE:** `externalTrafficPolicy` must be configured to `Local` in order for this steps to work
