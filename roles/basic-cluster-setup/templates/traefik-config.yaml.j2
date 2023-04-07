@@ -8,3 +8,5 @@ spec:
     service:
       spec:
         externalTrafficPolicy: {{ externalTrafficPolicy }}
+    nodeSelector:
+      node-role.kubernetes.io/master: "true"
