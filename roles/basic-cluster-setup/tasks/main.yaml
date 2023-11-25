@@ -47,10 +47,14 @@
       make:
         chdir: ~/k3s/cluster-monitoring
         target: vendor
+      environment:
+        PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin"
 
     - name: Run 'make' to generate all the K8s manifests
       make:
         chdir: ~/k3s/cluster-monitoring
+      environment:
+        PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin"
   when: >
     not vars_file_exists.stat.exists
     or cluster_monitoring_update_repo | bool
