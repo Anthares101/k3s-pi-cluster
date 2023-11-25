@@ -22,8 +22,9 @@ Other configurations may work but you know, they have not been tested.
 ## Requisites
 
 - You need Ansible of course
+- The master node should have Golang installed, since manual installation is needed to get an updated version I let this to you :)
 - The Ansible collections in the requirements file: `ansible-galaxy install -r requirements.yaml`
-- All you Raspberrys should have a valid network configuration with static IPs and hostname and SSH access configured with private key.
+- All your Raspberrys should have a valid network configuration with static IPs and hostname and SSH access configured with private key.
 
 ## Configuration
 
