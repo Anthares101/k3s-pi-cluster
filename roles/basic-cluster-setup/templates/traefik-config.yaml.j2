@@ -10,3 +10,10 @@ spec:
         externalTrafficPolicy: {{ externalTrafficPolicy }}
     nodeSelector:
       node-role.kubernetes.io/master: "true"
+    ports:
+      websecure:
+        tls:
+          enabled: true
+      web:
+        redirectTo:
+          port: websecure
