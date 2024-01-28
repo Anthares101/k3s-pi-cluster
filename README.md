@@ -7,9 +7,10 @@ The [monitoring stack](https://github.com/carlosedp/cluster-monitoring) used is 
 This Playbook do a couple of things:
 - Perform initial setup in the cluster nodes
 - Install K3S in a cluster with 1 master and n workers nodes (Adapt `hosts.ini` to your needs)
-- Install an NFS server to allow the cluster to provide persistent volumes to pods through a NFS provider.
+- Install an NFS server to allow the cluster to provide persistent volumes to pods through a NFS provider
 - Install an NFS provider and Prometheus - AlertManager - Grafana as monitoring stack out of the box
 - Install cert-manager with some letsencrypt issuers to allow the creation of valid https certificates
+- Setup Traefik ingress to redirect all requests to HTTPS
 
 ## Compatibility
 
@@ -24,7 +25,7 @@ Other configurations may work but you know, they have not been tested.
 - You need Ansible of course
 - The master node should have Golang installed, since manual installation is needed to get an updated version I let this to you :)
 - The Ansible collections in the requirements file: `ansible-galaxy install -r requirements.yaml`
-- All your Raspberrys should have a valid network configuration with static IPs and hostname and SSH access configured with private key.
+- All your Raspberrys should have a valid network configuration with static IPs and hostname and SSH access configured with private key
 
 ## Configuration
 
