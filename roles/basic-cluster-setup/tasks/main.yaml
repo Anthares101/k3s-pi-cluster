@@ -24,11 +24,6 @@
     state: directory
     mode: '0755'
 
-- name: Check if cluster-monitoring repo already exists
-  stat:
-    path: ~/k3s/cluster-monitoring/vars.jsonnet
-  register: vars_file_exists
-
 - name: Retrieve and template cluster-monitoring manifests
   block:
     - name: Clone the cluster-monitoring project
@@ -55,9 +50,6 @@
         chdir: ~/k3s/cluster-monitoring
       environment:
         PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin"
-  when: >
-    not vars_file_exists.stat.exists
-    or cluster_monitoring_update_repo | bool
 
 - name: Find all the manifests in the manifests/setup directory
   find:
@@ -87,6 +79,11 @@
     src: "{{ item }}"
     state: present
   loop: "{{ cluster_monitoring_files.files | sort(attribute='path') | map(attribute='path') | list }}"
+
+- name: Remove k3s directory
+  file:
+    path: ~/k3s
+    state: absent
 
 - name: Install Traefik custom config
   become: true
