@@ -1,0 +1,41 @@
+# Needed to make sure Prometheus can discover the metrics exporter
+serviceMonitor:
+  enabled: true
+
+# Create PrometheusRules for alerting on priority events
+prometheusRules:
+  enabled: true
+  # Make sure my Prometheus installation picks this up
+  additionalLabels:
+    prometheus: k8s
+    role: alert-rules
+  alerts:
+    warning:
+      enabled: true
+      rate_interval: "5m"
+      threshold: 0
+    error:
+      enabled: true
+      rate_interval: "5m"
+      threshold: 0
+    critical:
+      enabled: true
+      rate_interval: "5m"
+      threshold: 0
+    alert:
+      enabled: true
+      rate_interval: "5m"
+      threshold: 0
+    emergency:
+      enabled: true
+      rate_interval: "1m"
+      threshold: 0
+    additionalAlerts: {}
+
+# Custom tolerations to allow exporter to run in the master nodes
+tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+  - key: CriticalAddonsOnly
+    operator: Exists
+    effect: NoSchedule

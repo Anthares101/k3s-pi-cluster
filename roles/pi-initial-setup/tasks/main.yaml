@@ -8,12 +8,13 @@
     - { line: 'dtoverlay=pi3-disable-bt' }
   notify: reboot-pi
   
-- name: Ensure apparmor and apparmor-utils are installed
+- name: Ensure apparmor, apparmor-utils and raspberrypi-kernel-headers are installed
   become: true
   apt:
     name: 
       - apparmor
       - apparmor-utils
+      - raspberrypi-kernel-headers
     state: present
     update_cache: true
   notify: reboot-pi

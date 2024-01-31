@@ -1,7 +1,6 @@
 ---
-timezone: Europe/Madrid
-nfs_share: /home/pi/Raid/NFS
-suffix_domain: magi.lan
 alertmanager_telegram_bot_token: 1111111111:BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 alertmanager_telegram_chat_id: 123456789
 grafana_admin_password: admin
+
+suffix_domain: cluster.lan

@@ -1,0 +1,34 @@
+# Use ebpf driver instead of the default one. I was not able to build the default one in the nodes
+driver:
+  kind: ebpf
+
+# Exception for fake-hwclock
+customRules:
+  falco_rules.rpi.yaml: |-
+    - list: safe_etc_dirs
+      append: true
+      items: [ /etc/fake-hwclock.data, /etc/cups ]
+
+# Allow fancy Telegram notifications, using Grafana for now
+falcosidekick:
+  enabled: false
+  replicaCount: 1
+  image:
+    tag: latest-arm64
+
+# We need this for the metrics exporter
+falco:
+  grpc:
+    enabled: true
+  grpc_output:
+    enabled: true
+
+# Custom tolerations to allow falco to run in the master nodes
+tolerations:
+- effect: NoSchedule
+  key: node-role.kubernetes.io/master
+- effect: NoSchedule
+  key: node-role.kubernetes.io/control-plane
+- key: CriticalAddonsOnly
+  operator: Exists
+  effect: NoSchedule

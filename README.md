@@ -1,6 +1,6 @@
 # K3S Pi Cluster
 
-The [monitoring stack](https://github.com/carlosedp/cluster-monitoring) used is the [Carlos Eduardo](https://github.com/carlosedp) version of the [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus) repo and part of the Ansible roles were adapted from [Jeff Geerling](https://github.com/geerlingguy) [turing-pi-cluster](https://github.com/geerlingguy/turing-pi-cluster) project.
+Some of the tweaking to the Kube Prometheus stack were found in the repository [monitoring stack](https://github.com/carlosedp/cluster-monitoring), also I took the custom Grafana dashboard for cluster overview from there and made some modifications to it but not much. The Falco dashboards is basically a little fork of the one you can find on the [Grafana site](https://grafana.com/grafana/dashboards/11914).
 
 ## What does the playbook do?
 
@@ -9,6 +9,7 @@ This Playbook do a couple of things:
 - Install K3S in a cluster with 1 master and n workers nodes (Adapt `hosts.ini` to your needs)
 - Install an NFS server to allow the cluster to provide persistent volumes to pods through a NFS provider
 - Install an NFS provider and Prometheus - AlertManager - Grafana as monitoring stack out of the box
+- Installs Falco as Intrusion Detection System (IDS) and integrate it with Prometheus and company
 - Install cert-manager with some letsencrypt issuers to allow the creation of valid https certificates
 - Setup Traefik ingress to redirect all requests to HTTPS
 
@@ -23,7 +24,6 @@ Other configurations may work but you know, they have not been tested.
 ## Requisites
 
 - You need Ansible of course
-- The master node should have Golang installed, since manual installation is needed to get an updated version I let this to you :)
 - The Ansible collections in the requirements file: `ansible-galaxy install -r requirements.yaml`
 - All your Raspberrys should have a valid network configuration with static IPs and hostname and SSH access configured with private key
 
@@ -32,9 +32,10 @@ Other configurations may work but you know, they have not been tested.
 You can tweak the next variables under the `group_vars` folder:
 - `timezone`: Timezone that will be configured in the cluster nodes
 - `nfs_share`: NFS share path (Avoid locations that need `root` access)
-- `suffix_domain`: The domain suffix to use in the Grafana, Prometheus and AlertManager ingresses
-- `cluster_monitoring_version`: The version of the cluster-monitoring repo to check out
-- `grafana_from_email`: The admin email used in Grafana
+- `suffix_domain`: The domain suffix to use for the Grafana ingress
+- `alertmanager_telegram_bot_token`: Telegram bot token that Alert Manager should use for alerts
+- `alertmanager_telegram_chat_id`: The chat id where you Telegram bot will send the alerts, normally your Telegram ID
+- `grafana_admin_password`: The password that will be used for Grafana `admin` account. By default is `admin`
 - `certmanager_version`: cert-manager version to install
 - `cloudflare_email` and `cloudflare_token`: If you set this two variables the playbook will install a cluster issuer that will use Cloudflare API for letsencrypt certificates instead of the http challenge
 - `letsencrypt_email`: The email to use for the letsencrypt certificates
@@ -55,12 +56,9 @@ If you only need to execute part of it you can use the next tags (The names are 
 - `install-nfs-server`
 - `basic-cluster-setup`
 - `install-cert-manager`
+- `install-monitoring`
 
-Also, it is recomended to change the next line in `/var/lib/rancher/k3s/server/manifests/local-storage.yaml` after installation:
-
-```yaml
-storageclass.kubernetes.io/is-default-class: "true" # Set this to false to make sure you use NFS as the default storage class
-```
+**NOTE: If you don't execute the `install-monitoring` play, you will need to install the metrics server yourself!**
 
 ## Exposing your cluster to the Internet
 

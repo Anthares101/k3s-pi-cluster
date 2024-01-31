@@ -50,3 +50,6 @@
     
     - role: install-cert-manager
       tags: ['install-cert-manager']
+    
+    - role: install-monitoring
+      tags: ['install-monitoring']

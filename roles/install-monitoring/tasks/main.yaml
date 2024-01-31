@@ -1,0 +1,85 @@
+---
+- name: Get Helm install script
+  become: true
+  get_url:
+    url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    dest: /tmp/get_helm.sh
+    mode: '0700'
+
+- name: Install Helm
+  become: true
+  script: /tmp/get_helm.sh
+  args:
+    creates: /usr/local/bin/helm
+
+- name: Remove Helm installer
+  become: true
+  file:
+    path: /tmp/get_helm.sh
+    state: absent
+
+- name: Add prometheus-community chart repo
+  become: true
+  kubernetes.core.helm_repository:
+    name: prometheus-community
+    repo_url: "https://prometheus-community.github.io/helm-charts"
+
+- name: Deploy last Kube Prometheus stack version
+  become: true
+  kubernetes.core.helm:
+    name: kube-prometheus
+    chart_ref: prometheus-community/kube-prometheus-stack
+    release_namespace: monitoring
+    create_namespace: true
+    values: "{{ lookup('template', 'kube-prometheus.yaml.j2') | from_yaml }}"
+    update_repo_cache: true
+
+- name: Deploy last Prometheus adapter version
+  become: true
+  kubernetes.core.helm:
+    name: prometheus-adapter
+    chart_ref: prometheus-community/prometheus-adapter
+    release_namespace: monitoring
+    create_namespace: true
+    values: "{{ lookup('template', 'prometheus-adapter.yaml.j2') | from_yaml }}"
+    update_repo_cache: true
+
+- name: Add falcosecurity  chart repo
+  become: true
+  kubernetes.core.helm_repository:
+    name: falcosecurity
+    repo_url: "https://falcosecurity.github.io/charts"
+
+- name: Deploy last Falco version
+  become: true
+  kubernetes.core.helm:
+    name: falco
+    chart_ref: falcosecurity/falco
+    release_namespace: falco
+    create_namespace: true
+    values: "{{ lookup('template', 'falco.yaml.j2') | from_yaml }}"
+    update_repo_cache: true
+
+- name: Deploy last Falco exporter version
+  become: true
+  kubernetes.core.helm:
+    name: falco-exporter
+    chart_ref: falcosecurity/falco-exporter
+    release_namespace: monitoring
+    create_namespace: true
+    values: "{{ lookup('template', 'falco-exporter.yaml.j2') | from_yaml }}"
+    update_repo_cache: true
+
+- name: Deploy custom Grafana dashboard for cluster overview
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'grafana-dashboard-kubernetes-cluster-dashboard.yaml') | from_yaml }}"
+    validate:
+      fail_on_error: yes
+
+- name: Deploy custom Grafana dashboard for Falco
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'grafana-dashboard-falco.yaml.j2') | from_yaml }}"
+    validate:
+      fail_on_error: yes
