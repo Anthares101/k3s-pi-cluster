@@ -6,7 +6,7 @@ driver:
 customRules:
   falco_rules.rpi.yaml: |-
     - list: safe_etc_dirs
-      items: items: [ /etc/cassandra, /etc/ssl/certs/java, /etc/logstash, /etc/nginx/conf.d, /etc/container_environment, /etc/hrmconfig, /etc/fluent/configs.d, /etc/fake-hwclock.data, /etc/cups ]
+      items: [ /etc/cassandra, /etc/ssl/certs/java, /etc/logstash, /etc/nginx/conf.d, /etc/container_environment, /etc/hrmconfig, /etc/fluent/configs.d, /etc/fake-hwclock.data, /etc/cups ]
 
 # Allow fancy Telegram notifications, using Grafana for now
 falcosidekick:
