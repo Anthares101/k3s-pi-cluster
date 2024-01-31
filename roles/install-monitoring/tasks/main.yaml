@@ -77,7 +77,7 @@
 - name: Deploy custom Grafana dashboard for cluster overview
   kubernetes.core.k8s:
     state: present
-    definition: "{{ lookup('template', 'grafana-dashboard-kubernetes-cluster-dashboard.yaml') | from_yaml }}"
+    definition: "{{ lookup('template', 'grafana-dashboard-kubernetes-cluster-dashboard.yaml.j2') | from_yaml }}"
     validate:
       fail_on_error: yes
 
