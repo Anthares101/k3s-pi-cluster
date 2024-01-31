@@ -79,13 +79,9 @@
   kubernetes.core.k8s:
     state: present
     definition: "{{ lookup('template', 'grafana-dashboard-kubernetes-cluster-dashboard.yaml.j2') | from_yaml }}"
-    validate:
-      fail_on_error: yes
 
 - name: Deploy custom Grafana dashboard for Falco
   become: true
   kubernetes.core.k8s:
     state: present
     definition: "{{ lookup('template', 'grafana-dashboard-falco.yaml.j2') | from_yaml }}"
-    validate:
-      fail_on_error: yes
