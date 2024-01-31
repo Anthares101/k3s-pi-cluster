@@ -1,3 +1,5 @@
+#jinja2:variable_start_string:'[%' , variable_end_string:'%]'
+
 # Nerf default Prometheus scraping for K3S
 kubeEtcd:
   enabled: false
@@ -97,9 +99,9 @@ alertmanager:
     - name: 'null'
     - name: Telegram
       telegram_configs:
-      - bot_token: '{{ alertmanager_telegram_bot_token }}'
+      - bot_token: [% alertmanager_telegram_bot_token %]
         api_url: https://api.telegram.org
-        chat_id: {{ alertmanager_telegram_chat_id }}
+        chat_id: [% alertmanager_telegram_chat_id %]
         parse_mode: HTML
 
   alertmanagerSpec:
@@ -128,7 +130,7 @@ grafana:
   defaultDashboardsTimezone: Europe/Madrid
   defaultDashboardsEditable: false
 
-  adminPassword: '{{ grafana_admin_password }}'
+  adminPassword: [% grafana_admin_password %]
 
   plugins:
     - grafana-piechart-panel
@@ -159,10 +161,10 @@ grafana:
   ingress:
     enabled: true
     hosts:
-    - grafana.'{{ suffix_domain }}'
+    - grafana.[% suffix_domain %]
     tls:
     - hosts:
-      - grafana.'{{ suffix_domain }}'
+      - grafana.[% suffix_domain %]
 
 prometheusOperator:
   resources:
