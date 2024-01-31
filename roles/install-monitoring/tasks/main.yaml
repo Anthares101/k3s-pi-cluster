@@ -8,7 +8,7 @@
 
 - name: Install Helm
   become: true
-  script: /tmp/get_helm.sh
+  command: /tmp/get_helm.sh
   args:
     creates: /usr/local/bin/helm
 
@@ -31,6 +31,7 @@
     chart_ref: prometheus-community/kube-prometheus-stack
     release_namespace: monitoring
     create_namespace: true
+    atomic: true
     values: "{{ lookup('template', 'kube-prometheus.yaml.j2') | from_yaml }}"
     update_repo_cache: true
 
@@ -41,6 +42,7 @@
     chart_ref: prometheus-community/prometheus-adapter
     release_namespace: monitoring
     create_namespace: true
+    atomic: true
     values: "{{ lookup('template', 'prometheus-adapter.yaml.j2') | from_yaml }}"
     update_repo_cache: true
 
@@ -57,6 +59,7 @@
     chart_ref: falcosecurity/falco
     release_namespace: falco
     create_namespace: true
+    atomic: true
     values: "{{ lookup('template', 'falco.yaml.j2') | from_yaml }}"
     update_repo_cache: true
 
@@ -67,6 +70,7 @@
     chart_ref: falcosecurity/falco-exporter
     release_namespace: monitoring
     create_namespace: true
+    atomic: true
     values: "{{ lookup('template', 'falco-exporter.yaml.j2') | from_yaml }}"
     update_repo_cache: true
 
