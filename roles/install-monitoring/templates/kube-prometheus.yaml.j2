@@ -244,7 +244,7 @@ additionalPrometheusRulesMap:
         annotations:
           description: A high rate of error events are being detected by Falco
           summary: Falco is experiencing high rate of error events
-        expr: rate(falco_events{priority="3"}[5m]) > 0 unless {rule="Write below etc", k8s_pod_name=~"alertmanager-kube-prometheus-kube-prome-alertmanager-[0-9]+"}
+        expr: rate(falco_events{priority="3"}[5m]) > 0
         for: 15m
         labels:
           severity: warning
