@@ -8,7 +8,10 @@ data:
         "list": [
           {
             "builtIn": 1,
-            "datasource": "-- Grafana --",
+            "datasource": {
+              "type": "datasource",
+              "uid": "grafana"
+            },
             "enable": true,
             "hide": true,
             "iconColor": "rgba(0, 211, 255, 1)",
@@ -18,91 +21,97 @@ data:
         ]
       },
       "editable": false,
-      "gnetId": null,
+      "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": null,
       "links": [],
+      "liveNow": false,
       "panels": [
         {
-          "alert": {
-            "alertRuleTags": {},
-            "conditions": [
-              {
-                "evaluator": {
-                  "params": [
-                    0
-                  ],
-                  "type": "gt"
-                },
-                "operator": {
-                  "type": "and"
-                },
-                "query": {
-                  "params": [
-                    "B",
-                    "5m",
-                    "now"
-                  ]
-                },
-                "reducer": {
-                  "params": [],
-                  "type": "min"
-                },
-                "type": "query"
-              }
-            ],
-            "executionErrorState": "alerting",
-            "for": "0m",
-            "frequency": "1m",
-            "handler": 1,
-            "message": "",
-            "name": "Falco Intrusion Detection alert",
-            "noDataState": "ok",
-            "notifications": []
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
           },
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "prometheus",
           "description": "",
-          "fill": 1,
-          "fillGradient": 0,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "fillOpacity": 80,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineWidth": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "links": [],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unitScale": true
+            },
+            "overrides": []
+          },
           "gridPos": {
             "h": 11,
             "w": 24,
             "x": 0,
             "y": 0
           },
-          "hiddenSeries": false,
           "id": 2,
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null as zero",
           "options": {
-            "dataLinks": []
+            "barRadius": 0,
+            "barWidth": 0.97,
+            "fullHighlight": false,
+            "groupWidth": 0.7,
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "none",
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            },
+            "xTickLabelRotation": 0,
+            "xTickLabelSpacing": 100
           },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
+          "pluginVersion": "10.3.1",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
               "expr": "increase(falco_events[1m]) > 0",
               "interval": "",
               "intervalFactor": 1,
@@ -110,6 +119,10 @@ data:
               "refId": "A"
             },
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
               "expr": "rate(falco_events{priority!=\"5\",priority!=\"6\",priority!=\"7\"}[5m]) > 0",
               "hide": true,
               "interval": "",
@@ -118,51 +131,185 @@ data:
               "refId": "B"
             }
           ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
           "title": "Events rate",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
+          "type": "barchart"
         },
         {
-          "columns": [],
-          "datasource": "prometheus",
-          "fontSize": "100%",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "decimals": 2,
+              "displayName": "",
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short",
+              "unitScale": true
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Count"
+                  },
+                  {
+                    "id": "unit",
+                    "value": "short"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/instance|job|container|service|namespace/"
+                },
+                "properties": [
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "pod"
+                },
+                "properties": [
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "k8s_ns_name"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "namespace"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "k8s_pod_name"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "pod"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "hostname"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "reporter"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "priority"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "0": {
+                            "color": "red",
+                            "index": 0,
+                            "text": "EMERGENCY"
+                          },
+                          "1": {
+                            "color": "red",
+                            "index": 1,
+                            "text": "ALERTS"
+                          },
+                          "2": {
+                            "color": "red",
+                            "index": 2,
+                            "text": "CRITICAL"
+                          },
+                          "3": {
+                            "color": "orange",
+                            "index": 3,
+                            "text": "ERROR"
+                          },
+                          "4": {
+                            "color": "yellow",
+                            "index": 4,
+                            "text": "WARNING"
+                          },
+                          "5": {
+                            "color": "green",
+                            "index": 5,
+                            "text": "NOTICE"
+                          },
+                          "6": {
+                            "color": "blue",
+                            "index": 6,
+                            "text": "INFORMATIONAL"
+                          },
+                          "7": {
+                            "color": "purple",
+                            "index": 7,
+                            "text": "DEBUG"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "type": "color-text"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
           "gridPos": {
             "h": 10,
             "w": 24,
@@ -171,99 +318,26 @@ data:
           },
           "id": 4,
           "links": [],
-          "pageSize": null,
-          "showHeader": true,
-          "sort": {
-            "col": null,
-            "desc": false
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "enablePagination": true,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
           },
-          "styles": [
-            {
-              "alias": "Time",
-              "align": "auto",
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "pattern": "Time",
-              "type": "date"
-            },
-            {
-              "alias": "",
-              "align": "auto",
-              "colorMode": null,
-              "colors": [
-                "rgba(245, 54, 54, 0.9)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(50, 172, 45, 0.97)"
-              ],
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "decimals": 2,
-              "link": false,
-              "mappingType": 1,
-              "pattern": "/__name__|instance|job|kubernetes_name|(__name|helm_|app_).*/",
-              "sanitize": false,
-              "thresholds": [],
-              "type": "hidden",
-              "unit": "short"
-            },
-            {
-              "alias": "Count",
-              "align": "auto",
-              "colorMode": null,
-              "colors": [
-                "rgba(245, 54, 54, 0.9)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(50, 172, 45, 0.97)"
-              ],
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "decimals": 0,
-              "mappingType": 1,
-              "pattern": "Value",
-              "thresholds": [],
-              "type": "number",
-              "unit": "short"
-            },
-            {
-              "alias": "",
-              "align": "left",
-              "colorMode": null,
-              "colors": [
-                "rgba(245, 54, 54, 0.9)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(50, 172, 45, 0.97)"
-              ],
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "decimals": 0,
-              "mappingType": 1,
-              "pattern": "priority",
-              "thresholds": [
-                ""
-              ],
-              "type": "number",
-              "unit": "none",
-              "valueMaps": [
-                {
-                  "text": "5",
-                  "value": "5"
-                }
-              ]
-            },
-            {
-              "alias": "",
-              "align": "left",
-              "colorMode": null,
-              "colors": [
-                "rgba(245, 54, 54, 0.9)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(50, 172, 45, 0.97)"
-              ],
-              "decimals": 2,
-              "pattern": "/.*/",
-              "thresholds": [],
-              "type": "string",
-              "unit": "short"
-            }
-          ],
+          "pluginVersion": "10.3.1",
           "targets": [
             {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
               "expr": "increase(falco_events[1m]) > 0",
               "format": "table",
               "instant": false,
@@ -271,29 +345,48 @@ data:
               "refId": "A"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Totals",
-          "transform": "table",
+          "transformations": [
+            {
+              "id": "merge",
+              "options": {
+                "reducers": []
+              }
+            }
+          ],
           "transparent": true,
           "type": "table"
         }
       ],
-      "schemaVersion": 22,
-      "style": "dark",
+      "refresh": "",
+      "schemaVersion": 39,
       "tags": [
         "custom"
       ],
       "templating": {
-        "list": []
+        "list": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus"
+            },
+            "filters": [],
+            "hide": 0,
+            "name": "Filters",
+            "skipUrlSync": false,
+            "type": "adhoc"
+          }
+        ]
       },
       "time": {
-        "from": "now-6h",
+        "from": "now-5m",
         "to": "now"
       },
       "timepicker": {},
       "timezone": "",
-      "title": "Falco Dashboard"
+      "title": "Falco Dashboard",
+      "version": 1,
+      "weekStart": ""
     }
 kind: ConfigMap
 metadata:
