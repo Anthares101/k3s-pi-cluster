@@ -1,6 +1,5 @@
 ---
-alertmanager_telegram_bot_token: 1111111111:BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-alertmanager_telegram_chat_id: 123456789
+alertmanager_discord_webhook: https://discord.com/api/webhooks/XXXXXXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 grafana_admin_password: admin
 
 suffix_domain: cluster.lan

@@ -89,7 +89,7 @@ alertmanager:
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 12h
-      receiver: Telegram
+      receiver: Discord
       routes:
       - receiver: 'null'
         matchers:
@@ -97,12 +97,9 @@ alertmanager:
 
     receivers:
     - name: 'null'
-    - name: Telegram
-      telegram_configs:
-      - bot_token: [% alertmanager_telegram_bot_token %]
-        api_url: https://api.telegram.org
-        chat_id: [% alertmanager_telegram_chat_id %]
-        parse_mode: HTML
+    - name: Discord
+      discord_configs:
+      - webhook_url: [% alertmanager_discord_webhook %]
 
   alertmanagerSpec:
     storage:

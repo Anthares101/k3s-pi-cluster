@@ -33,8 +33,7 @@ You can tweak the next variables under the `group_vars` folder:
 - `timezone`: Timezone that will be configured in the cluster nodes
 - `nfs_share`: NFS share path (Avoid locations that need `root` access)
 - `suffix_domain`: The domain suffix to use for the Grafana ingress
-- `alertmanager_telegram_bot_token`: Telegram bot token that Alert Manager should use for alerts
-- `alertmanager_telegram_chat_id`: The chat id where you Telegram bot will send the alerts, normally your Telegram ID
+- `alertmanager_discord_webhook`: Discord webhook that Alert Manager should use for alerts
 - `grafana_admin_password`: The password that will be used for Grafana `admin` account. By default is `admin`
 - `certmanager_version`: cert-manager version to install
 - `cloudflare_email` and `cloudflare_token`: If you set this two variables the playbook will install a cluster issuer that will use Cloudflare API for letsencrypt certificates instead of the http challenge
