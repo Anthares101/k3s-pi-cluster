@@ -52,22 +52,24 @@
     name: falcosecurity
     repo_url: "https://falcosecurity.github.io/charts"
 
-- name: Deploy last Falco version
+- name: Deploy Falco v0.37.1
   become: true
   kubernetes.core.helm:
     name: falco
     chart_ref: falcosecurity/falco
+    chart_version: 4.3.1
     release_namespace: falco
     create_namespace: true
     atomic: true
     values: "{{ lookup('template', 'falco.yaml.j2') | from_yaml }}"
     update_repo_cache: true
 
-- name: Deploy last Falco exporter version
+- name: Deploy Falco exporter 0.8.3
   become: true
   kubernetes.core.helm:
     name: falco-exporter
     chart_ref: falcosecurity/falco-exporter
+    chart_version: 0.11.0
     release_namespace: monitoring
     create_namespace: true
     atomic: true
