@@ -52,12 +52,12 @@
     name: falcosecurity
     repo_url: "https://falcosecurity.github.io/charts"
 
-- name: Deploy Falco v0.37.1
+- name: Deploy Falco v0.36.1
   become: true
   kubernetes.core.helm:
     name: falco
     chart_ref: falcosecurity/falco
-    chart_version: 4.3.1
+    chart_version: 3.8.7
     release_namespace: falco
     create_namespace: true
     atomic: true
