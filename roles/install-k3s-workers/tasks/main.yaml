@@ -21,7 +21,7 @@
   shell: >-
     K3S_URL=https://"{{ groups['master'][0] }}":6443
     K3S_TOKEN="{{ hostvars[groups['master'][0]]['node_token'] }}"
-    ~/k3s_install.sh >> ~/k3s_install_log.txt
+    ~/k3s_install.sh --kubelet-arg 'seccomp-default=true' >> ~/k3s_install_log.txt
   args:
     chdir: "~"
     creates: /var/lib/rancher/k3s/agent/kubelet.kubeconfig
