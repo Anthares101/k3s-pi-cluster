@@ -1,7 +1,7 @@
 - name: Disable Wifi and Bluetooth
   become: true
   lineinfile:
-    dest: /boot/config.txt
+    dest: /boot/firmware/config.txt
     line: "{{ item.line }}"
   loop:
     - { line: 'dtoverlay=pi3-disable-wifi' }
@@ -22,7 +22,7 @@
 - name: Ensure apparmor is enabled in cmdline.txt
   become: true
   replace:
-    path: /boot/cmdline.txt
+    path: /boot/firmware/cmdline.txt
     regexp: '^([\w](?!.*\b{{ item }}\b).*)$'
     replace: '\1 {{ item }}'
   with_items:
