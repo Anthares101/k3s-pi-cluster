@@ -16,8 +16,8 @@ This Playbook do a couple of things:
 ## Compatibility
 
 This configuration was tested with the following Raspberry Pi and OS combinations:
-- Raspberry Pi 4 model B and Raspberry Pi OS (bullseye 32-bit)
-- Raspberry Pi 4 model B and Raspberry Pi OS (bullseye 64-bit)
+- Raspberry Pi 4 model B and Raspberry Pi OS (bookworm 32-bit)
+- Raspberry Pi 4 model B and Raspberry Pi OS (bookworm 64-bit)
 
 Other configurations may work but you know, they have not been tested.
 
