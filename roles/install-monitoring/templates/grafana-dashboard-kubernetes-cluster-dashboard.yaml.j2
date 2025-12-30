@@ -104,7 +104,7 @@ data:
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "(sum(node_memory_MemTotal_bytes) - sum(node_memory_MemFree_bytes+node_memory_Buffers_bytes+node_memory_Cached_bytes) ) / sum(node_memory_MemTotal_bytes) * 100",
+              "expr": "(sum(node_memory_MemTotal_bytes{job="node-exporter"}) - sum(node_memory_MemFree_bytes{job="node-exporter"}+node_memory_Buffers_bytes{job="node-exporter"}+node_memory_Cached_bytes{job="node-exporter"}) ) / sum(node_memory_MemTotal_bytes{job="node-exporter"}) * 100",
               "format": "time_series",
               "interval": "10s",
               "intervalFactor": 1,
@@ -406,7 +406,7 @@ data:
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "(time() - node_boot_time_seconds)",
+              "expr": "(time() - node_boot_time_seconds{job="node-exporter"})",
               "format": "table",
               "instant": true,
               "intervalFactor": 1,
@@ -567,7 +567,7 @@ data:
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "node_memory_MemTotal_bytes - (node_memory_MemFree_bytes+node_memory_Buffers_bytes+node_memory_Cached_bytes)",
+              "expr": "sum by (node) (node_memory_MemTotal_bytes{job="node-exporter"} - (node_memory_MemFree_bytes{job="node-exporter"}+node_memory_Buffers_bytes{job="node-exporter"}+node_memory_Cached_bytes{job="node-exporter"}))",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{ node }}",
@@ -578,7 +578,7 @@ data:
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "(node_memory_MemTotal_bytes - (node_memory_MemFree_bytes+node_memory_Buffers_bytes+node_memory_Cached_bytes))/node_memory_MemTotal_bytes",
+              "expr": "sum by (node) ((node_memory_MemTotal_bytes{job="node-exporter"} - (node_memory_MemFree_bytes{job="node-exporter"}+node_memory_Buffers_bytes{job="node-exporter"}+node_memory_Cached_bytes{job="node-exporter"})))/sum by (node) (node_memory_MemTotal_bytes{job="node-exporter"})",
               "format": "time_series",
               "hide": true,
               "intervalFactor": 1,
