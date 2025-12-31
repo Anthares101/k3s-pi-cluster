@@ -271,6 +271,14 @@ additionalPrometheusRulesMap:
           severity: critical
     - name: node-exporter
       rules:
+      - alert: NodeExporterNotReporting
+        expr: absent(up{job="node-exporter"})
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "node-exporter metrics missing for {{ $labels.instance }}"
+          description: "Exporter not reporting node metrics."
       - alert: HostOutOfMemory
         expr: '(node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 10) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}'
         for: 2m
