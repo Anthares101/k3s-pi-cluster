@@ -15,8 +15,19 @@ spec:
       operator: Exists
     ports:
       websecure:
+        forwardedHeaders:
+          trustedIPs: ["10.42.0.0/16"]
+        proxyProtocol:
+          trustedIPs: ["10.42.0.0/16"]
         tls:
           enabled: true
       web:
-        redirectTo:
-          port: websecure
+        forwardedHeaders:
+          trustedIPs: ["10.42.0.0/16"]
+        proxyProtocol:
+          trustedIPs: ["10.42.0.0/16"]
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
