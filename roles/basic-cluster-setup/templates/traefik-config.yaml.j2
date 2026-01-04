@@ -8,8 +8,11 @@ spec:
     service:
       spec:
         externalTrafficPolicy: {{ externalTrafficPolicy }}
-    nodeSelector:
-      node-role.kubernetes.io/master: "true"
+    deployment:
+      kind: {% if externalTrafficPolicy == "Cluster" %}Deployment{% else %}DaemonSet{% endif %}
+    tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
     ports:
       websecure:
         tls:
