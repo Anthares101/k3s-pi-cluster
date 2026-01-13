@@ -6,13 +6,6 @@
     dest: /var/lib/rancher/k3s/server/manifests/cert-manager
     mode: '0600'
 
-- name: Modify the manifest for arm
-  become: true
-  replace:
-    path: /var/lib/rancher/k3s/server/manifests/cert-manager
-    regexp: '(image:.*):(v.*)$'
-    replace: '\1-arm:\2'
-
 - name: Install cert-manager as addon
   become: true
   command: mv /var/lib/rancher/k3s/server/manifests/cert-manager /var/lib/rancher/k3s/server/manifests/cert-manager.yaml

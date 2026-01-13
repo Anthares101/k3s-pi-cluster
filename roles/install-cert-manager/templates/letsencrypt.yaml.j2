@@ -5,7 +5,6 @@ metadata:
   name: letsencrypt
 spec:
   acme:
-    email: {{ letsencrypt_email }}
     privateKeySecretRef:
       name: letsencrypt-account-key
     server: https://acme-v02.api.letsencrypt.org/directory
