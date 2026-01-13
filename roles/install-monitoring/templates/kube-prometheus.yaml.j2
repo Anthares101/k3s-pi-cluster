@@ -22,11 +22,11 @@ prometheusOperator:
 
   resources:
     limits:
-      cpu: 200m
-      memory: 200Mi
-    requests:
       cpu: 100m
-      memory: 100Mi
+      memory: 256Mi
+    requests:
+      cpu: 1
+      memory: 512Mi
 
   tolerations:
   - key: CriticalAddonsOnly
@@ -37,8 +37,9 @@ prometheus:
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorNamespaceSelector:
-      matchLabels:
-        name: monitoring
+      matchNames:
+      - monitoring
+      - gpu-operator
     retention: 15d
     storageSpec:
       volumeClaimTemplate:
@@ -50,7 +51,7 @@ prometheus:
 
   resources:
     requests:
-      memory: 400Mi
+      memory: 500Mi
   priorityClassName: system-cluster-critical
 
   tolerations:
@@ -112,10 +113,10 @@ alertmanager:
     resources:
       limits:
         cpu: 500m
-        memory: 64Mi
+        memory: 512Mi
       requests:
-        cpu: 25m
-        memory: 32Mi
+        cpu: 50m
+        memory: 128Mi
     priorityClassName: system-cluster-critical
 
     tolerations:
@@ -136,10 +137,10 @@ grafana:
   resources:
     limits:
       cpu: 1
-      memory: 256Mi
+      memory: 512Mi
     requests:
-      cpu: 50m
-      memory: 128Mi
+      cpu: 100m
+      memory: 256Mi
 
   tolerations:
   - key: CriticalAddonsOnly
@@ -149,11 +150,11 @@ grafana:
   sidecar:
     resources:
       limits:
-        cpu: 600m
-        memory: 128Mi
+        cpu: 500m
+        memory: 512Mi
       requests:
-        cpu: 25m
-        memory: 64Mi
+        cpu: 50m
+        memory: 256Mi
 
   ingress:
     enabled: true
@@ -190,10 +191,10 @@ prometheus-node-exporter:
   resources:
     limits:
       cpu: 800m
-      memory: 50Mi
+      memory: 64Mi
     requests:
-      cpu: 5m
-      memory: 16Mi
+      cpu: 10m
+      memory: 32Mi
   priorityClassName: system-cluster-critical
 
   tolerations:
@@ -205,10 +206,10 @@ kube-state-metrics:
   resources:
     limits:
       cpu: 500m
-      memory: 50Mi
+      memory: 128Mi
     requests:
-      cpu: 5m
-      memory: 16Mi
+      cpu: 10m
+      memory: 64Mi
   priorityClassName: system-cluster-critical
   tolerations:
   - key: CriticalAddonsOnly
@@ -218,6 +219,96 @@ kube-state-metrics:
 additionalPrometheusRulesMap:
   rule-name:
     groups:
+    - name: nut.rules
+      rules:
+      - alert: NutExporterNotReporting
+        expr: absent(up{job="apollo-prometheus-nut-exporter"})
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "apollo nut metrics missing for {{ $labels.instance }}"
+          description: "Exporter not reporting apollo NUT metrics."
+      - alert: nutBatteryWarning
+        expr: network_ups_tools_battery_charge < 50
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Battery level < 50% on {{ $labels.ups }}"
+          description: "Battery level < 50% for more than 2 minutes."
+      - alert: nutBatteryCritical
+        expr: network_ups_tools_battery_charge < 25
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Battery level < 25% on {{ $labels.ups }}"
+          description: "Battery level < 25% for more than 2 minutes."
+      - alert: nutOnBattery
+        expr: network_ups_tools_ups_status{flag="OL"} != 1
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.ups }} on battery"
+          description: "{{ $labels.ups }} on battery for more than 30 seconds."
+    - name: dcgm-gpu.rules
+      rules:
+      - alert: HighGPUUtilization
+        expr: DCGM_FI_DEV_GPU_UTIL > 90
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High GPU utilization on {{ $labels.instance }}"
+          description: "GPU utilization > 90% for more than 5 minutes."
+
+      - alert: GPUMemoryHigh
+        expr: (DCGM_FI_DEV_FB_USED / (DCGM_FI_DEV_FB_USED + DCGM_FI_DEV_FB_FREE)) * 100 > 90
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "GPU memory > 90% used on {{ $labels.instance }}"
+          description: "GPU memory usage is high (> 90%) for more than 5 minutes."
+
+      - alert: GPUOverTemperatureWarning
+        expr: DCGM_FI_DEV_GPU_TEMP > 75
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "GPU temperature > 75°C on {{ $labels.instance }}"
+          description: "Possible cooling issue."
+
+      - alert: GPUOverTemperatureCritical
+        expr: DCGM_FI_DEV_GPU_TEMP > 85
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "GPU temperature > 85°C on {{ $labels.instance }}"
+          description: "Critical temperature; possible hardware risk."
+
+      - alert: GPUExporterNotReporting
+        expr: absent(up{job="nvidia-dcgm-exporter"})
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "nvidia-dcgm-exporter metrics missing for {{ $labels.instance }}"
+          description: "Exporter not reporting GPU metrics."
+    - name: apollo.rules
+      rules:
+      - alert: ApolloExporterNotReporting
+        expr: absent(up{job="apollo-prometheus-node-exporter"})
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "apollo metrics missing for {{ $labels.instance }}"
+          description: "Exporter not reporting apollo metrics."
     - name: falco-exporter
       rules:
       - alert: FalcoExporterAbsent
@@ -279,6 +370,7 @@ additionalPrometheusRulesMap:
         annotations:
           summary: "node-exporter metrics missing for {{ $labels.instance }}"
           description: "Exporter not reporting node metrics."
+
       - alert: HostOutOfMemory
         expr: '(node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 10) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}'
         for: 2m

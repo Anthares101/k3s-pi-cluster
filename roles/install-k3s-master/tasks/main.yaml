@@ -1,20 +1,3 @@
-- name: Ensure cgroups are configured correctly in cmdline.txt
-  become: true
-  replace:
-    path: /boot/cmdline.txt
-    regexp: '^([\w](?!.*\b{{ item }}\b).*)$'
-    replace: '\1 {{ item }}'
-  with_items:
-    - "cgroup_memory=1"
-    - "cgroup_enable=memory"
-  notify: reboot-pi
-
-- name: Ensure openshift Python library is installed.
-  pip:
-    name: openshift
-    state: present
-  become: true
-
 - name: Download K3s install script
   become: true
   get_url:
