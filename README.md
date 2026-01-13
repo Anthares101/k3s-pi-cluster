@@ -1,3 +1,5 @@
+**CAUTION: SINCE I HAD TO DEPLOY EVERYTHING TO X86 SYSTEMS I MADE SOME CHANGES AS I NEED THEM, THIS BRANCH IS NOT TESTED PROPERLY!**
+
 # K3S Pi Cluster
 
 Some of the tweaking to the Kube Prometheus stack were found in the repository [monitoring stack](https://github.com/carlosedp/cluster-monitoring), also I took the custom Grafana dashboard for cluster overview from there and made some modifications to it but not much. The Falco dashboards is basically a little fork of the one you can find on the [Grafana site](https://grafana.com/grafana/dashboards/11914).
