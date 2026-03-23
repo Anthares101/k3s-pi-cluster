@@ -11,12 +11,12 @@ falcosidekick:
 
 # We need this for Prometheus
 falco:
-  metrics:
-    enabled: true
-    interval: 15m
   webserver:
     enabled: true
     prometheus_metrics_enabled: true
+metrics:
+  enabled: true
+  interval: 15m
 serviceMonitor:
   create: true
 
