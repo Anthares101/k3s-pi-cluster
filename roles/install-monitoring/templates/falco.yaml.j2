@@ -2,23 +2,21 @@
 driver:
   kind: auto
 
-# Allow fancy notifications, using Alert Manager for now
-falcosidekick:
-  enabled: false
-  replicaCount: 1
-  image:
-    tag: latest-arm64
-
 # We need this for Prometheus
 falco:
   webserver:
     enabled: true
-    prometheus_metrics_enabled: true
-metrics:
+  http_output:
+    enabled: true
+    url: "http://falco-sidekick:2801"
+falcosidekick:
   enabled: true
-  interval: 15m
-serviceMonitor:
-  create: true
+  config:
+    prometheus:
+      enabled: true
+  serviceMonitor:
+    enabled: true
+    interval: 15s
 
 # Custom tolerations to allow falco to run in the master nodes
 tolerations:
