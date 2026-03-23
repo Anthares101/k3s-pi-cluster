@@ -17,8 +17,8 @@ falco:
   webserver:
     enabled: true
     prometheus_metrics_enabled: true
-  serviceMonitor:
-    create: true
+serviceMonitor:
+  create: true
 
 # Custom tolerations to allow falco to run in the master nodes
 tolerations:
