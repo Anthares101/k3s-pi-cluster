@@ -112,7 +112,7 @@ data:
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "increase(falco_events[1m]) > 0",
+              "expr": "increase(falcosecurity_falco_rules_matches_total[1m]) > 0",
               "interval": "",
               "intervalFactor": 1,
               "legendFormat": "{{rule}} (ns=\"{{k8s_ns_name}}\",pod=\"{{k8s_pod_name}}\")",
@@ -123,7 +123,7 @@ data:
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "rate(falco_events{priority!=\"5\",priority!=\"6\",priority!=\"7\"}[5m]) > 0",
+              "expr": "rate(falcosecurity_falco_rules_matches_total{priority!=\"5\",priority!=\"6\",priority!=\"7\"}[5m]) > 0",
               "hide": true,
               "interval": "",
               "intervalFactor": 1,
@@ -338,7 +338,7 @@ data:
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "increase(falco_events[1m]) > 0",
+              "expr": "increase(falcosecurity_falco_rules_matches_total[1m]) > 0",
               "format": "table",
               "instant": false,
               "interval": "30s",
