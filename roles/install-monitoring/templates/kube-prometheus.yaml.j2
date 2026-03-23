@@ -325,7 +325,7 @@ additionalPrometheusRulesMap:
         annotations:
           description: A high rate of warning events are being detected by Falco
           summary: Falco is experiencing high rate of warning events
-        expr: rate(falcosecurity_falco_rules_matches_total{priority="4"}[5m]) > 0
+        expr: rate(falcosecurity_falcosidekick_falco_events_total{priority="4"}[5m]) > 0
         for: 15m
         labels:
           severity: warning
@@ -333,7 +333,7 @@ additionalPrometheusRulesMap:
         annotations:
           description: A high rate of error events are being detected by Falco
           summary: Falco is experiencing high rate of error events
-        expr: rate(falcosecurity_falco_rules_matches_total{priority="3"}[5m]) > 0
+        expr: rate(falcosecurity_falcosidekick_falco_events_total{priority="3"}[5m]) > 0
         for: 15m
         labels:
           severity: warning
@@ -341,7 +341,7 @@ additionalPrometheusRulesMap:
         annotations:
           description: A high rate of critical events are being detected by Falco
           summary: Falco is experiencing high rate of critical events
-        expr: rate(falcosecurity_falco_rules_matches_total{priority="2"}[5m]) > 0
+        expr: rate(falcosecurity_falcosidekick_falco_events_total{priority="2"}[5m]) > 0
         for: 15m
         labels:
           severity: critical
@@ -349,7 +349,7 @@ additionalPrometheusRulesMap:
         annotations:
           description: A high rate of alert events are being detected by Falco
           summary: Falco is experiencing high rate of alert events
-        expr: rate(falcosecurity_falco_rules_matches_total{priority="1"}[5m]) > 0
+        expr: rate(falcosecurity_falcosidekick_falco_events_total{priority="1"}[5m]) > 0
         for: 5m
         labels:
           severity: critical
@@ -357,7 +357,7 @@ additionalPrometheusRulesMap:
         annotations:
           description: A high rate of emergency events are being detected by Falco
           summary: Falco is experiencing high rate of emergency events
-        expr: rate(falcosecurity_falco_rules_matches_total{priority="0"}[1m]) > 0
+        expr: rate(falcosecurity_falcosidekick_falco_events_total{priority="0"}[1m]) > 0
         for: 1m
         labels:
           severity: critical
