@@ -317,7 +317,7 @@ additionalPrometheusRulesMap:
           description: No metrics are being scraped from falco. No events will trigger
             any alerts.
           summary: Falco has dissapeared from Prometheus service discovery.
-        expr: absent(up{job="falco-metrics"})
+        expr: absent(up{job="falco-falcosidekick"})
         for: 10m
         labels:
           severity: critical

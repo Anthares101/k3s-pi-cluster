@@ -8,9 +8,10 @@ falco:
     enabled: true
   http_output:
     enabled: true
-    url: "http://falco-sidekick:2801"
+    url: "http://falco-falcosidekick:2801"
 falcosidekick:
   enabled: true
+  replicaCount: 1
   config:
     prometheus:
       enabled: true
