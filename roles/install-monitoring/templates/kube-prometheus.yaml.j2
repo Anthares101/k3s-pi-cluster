@@ -309,14 +309,14 @@ additionalPrometheusRulesMap:
         annotations:
           summary: "apollo metrics missing for {{ $labels.instance }}"
           description: "Exporter not reporting apollo metrics."
-    - name: falco-exporter
+    - name: falco
       rules:
-      - alert: FalcoExporterAbsent
+      - alert: FalcoAbsent
         annotations:
           description: No metrics are being scraped from falco. No events will trigger
             any alerts.
-          summary: Falco Exporter has dissapeared from Prometheus service discovery.
-        expr: absent(up{job="falco-exporter"})
+          summary: Falco has dissapeared from Prometheus service discovery.
+        expr: absent(up{job="falco"})
         for: 10m
         labels:
           severity: critical

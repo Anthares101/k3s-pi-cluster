@@ -2,12 +2,6 @@
 driver:
   kind: auto
 
-# Exception for fake-hwclock
-customRules:
-  falco_rules.rpi.yaml: |-
-    - list: safe_etc_dirs
-      items: [ /etc/cassandra, /etc/ssl/certs/java, /etc/logstash, /etc/nginx/conf.d, /etc/container_environment, /etc/hrmconfig, /etc/fluent/configs.d, /etc/fake-hwclock.data, /etc/cups ]
-
 # Allow fancy notifications, using Alert Manager for now
 falcosidekick:
   enabled: false
@@ -15,12 +9,14 @@ falcosidekick:
   image:
     tag: latest-arm64
 
-# We need this for the metrics exporter
+# We need this for Prometheus
 falco:
-  grpc:
+  metrics:
     enabled: true
-  grpc_output:
+    interval: 15m
+  webserver:
     enabled: true
+    prometheus_metrics_enabled: true
 
 # Custom tolerations to allow falco to run in the master nodes
 tolerations:
