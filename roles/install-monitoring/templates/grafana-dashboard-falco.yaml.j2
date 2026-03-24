@@ -117,18 +117,6 @@ data:
               "intervalFactor": 1,
               "legendFormat": "{{rule}} (ns=\"{{k8s_ns_name}}\",pod=\"{{k8s_pod_name}}\")",
               "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "expr": "rate(falcosecurity_falcosidekick_falco_events_total{priority!=\"5\",priority!=\"6\",priority!=\"7\"}[5m]) > 0",
-              "hide": true,
-              "interval": "",
-              "intervalFactor": 1,
-              "legendFormat": "{{rule}} (ns=\"{{k8s_ns_name}}\",pod=\"{{k8s_pod_name}}\")",
-              "refId": "B"
             }
           ],
           "title": "Events rate",
@@ -187,7 +175,7 @@ data:
               {
                 "matcher": {
                   "id": "byRegexp",
-                  "options": "/instance|job|container|service|namespace/"
+                  "options": "/instance|job|container|service|namespace|priority$/"
                 },
                 "properties": [
                   {
@@ -211,30 +199,6 @@ data:
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "k8s_ns_name"
-                },
-                "properties": [
-                  {
-                    "id": "displayName",
-                    "value": "namespace"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "k8s_pod_name"
-                },
-                "properties": [
-                  {
-                    "id": "displayName",
-                    "value": "pod"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
                   "options": "hostname"
                 },
                 "properties": [
@@ -247,7 +211,7 @@ data:
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "priority"
+                  "options": "priority_raw"
                 },
                 "properties": [
                   {
@@ -255,42 +219,42 @@ data:
                     "value": [
                       {
                         "options": {
-                          "0": {
+                          "emergency": {
                             "color": "red",
                             "index": 0,
                             "text": "EMERGENCY"
                           },
-                          "1": {
+                          "alert": {
                             "color": "red",
                             "index": 1,
-                            "text": "ALERTS"
+                            "text": "ALERT"
                           },
-                          "2": {
+                          "critical": {
                             "color": "red",
                             "index": 2,
                             "text": "CRITICAL"
                           },
-                          "3": {
+                          "error": {
                             "color": "orange",
                             "index": 3,
                             "text": "ERROR"
                           },
-                          "4": {
+                          "warning": {
                             "color": "yellow",
                             "index": 4,
                             "text": "WARNING"
                           },
-                          "5": {
+                          "notice": {
                             "color": "green",
                             "index": 5,
                             "text": "NOTICE"
                           },
-                          "6": {
+                          "informational": {
                             "color": "blue",
                             "index": 6,
                             "text": "INFORMATIONAL"
                           },
-                          "7": {
+                          "debug": {
                             "color": "purple",
                             "index": 7,
                             "text": "DEBUG"
