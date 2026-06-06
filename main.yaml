@@ -37,9 +37,6 @@
 - name: Configure cluster
   hosts: master
   gather_facts: true
-
-  collections:
-    - community.kubernetes
   
   environment:
     K8S_AUTH_KUBECONFIG: /etc/rancher/k3s/k3s.yaml
