@@ -54,6 +54,5 @@
     line: "{{ item.line }}"
   loop:
     - { line: 'PermitRootLogin no' }
-    - { line: 'UsePAM no' }
     - { line: 'PasswordAuthentication no' }
   notify: reload-sshd
